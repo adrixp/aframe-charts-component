@@ -3,9 +3,7 @@
 [![Version](http://img.shields.io/npm/v/aframe-charts-component.svg?style=flat-square)](https://npmjs.org/package/aframe-charts-component)
 [![License](http://img.shields.io/npm/l/aframe-charts-component.svg?style=flat-square)](https://npmjs.org/package/aframe-charts-component)
 
-Make 3D Charts with this component based on A-Frame.
-
-For [A-Frame](https://aframe.io).
+Make 3D Charts with this component based on [A-Frame](https://aframe.io).
 
 ### API
 
