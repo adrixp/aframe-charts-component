@@ -80,7 +80,10 @@ if (typeof AFRAME === 'undefined') {
  * A-Charts component for A-Frame.
  */
 AFRAME.registerComponent('charts', {
-  schema: {},
+  schema: {
+      size: {type: 'number', default: 1},
+      dataPoints: {type: 'asset'}
+  },
 
   /**
    * Set if component needs multiple instancing.
@@ -90,13 +93,21 @@ AFRAME.registerComponent('charts', {
   /**
    * Called once when component is attached. Generally for initial setup.
    */
-  init: function () { },
+  init: function () {
+      this.loader = new THREE.FileLoader();
+  },
 
   /**
    * Called when component is attached and when component data changes.
    * Generally modifies the entity based on the data.
    */
-  update: function (oldData) { },
+  update: function (oldData) {
+      const data = this.data;
+
+      if (data.dataPoints){
+          this.loader.load(data.dataPoints, this.onDataLoaded.bind(this));
+      }
+  },
 
   /**
    * Called when a component is removed (e.g., via removeAttribute).
@@ -119,7 +130,27 @@ AFRAME.registerComponent('charts', {
    * Called when entity resumes.
    * Use to continue or add any dynamic or background behavior such as events.
    */
-  play: function () { }
+  play: function () { },
+
+  onDataLoaded: function (file) {
+      var dataPoints = JSON.parse(file);
+
+      for (let point of dataPoints) {
+          var entity = document.createElement('a-sphere');
+          entity.setAttribute('position', {x: point['x'], y: point['y'], z: point['z']});
+          entity.setAttribute('color', point['color']);
+          entity.setAttribute('radius', point['size']);
+
+          entity.addEventListener('mouseenter', function () {
+              this.setAttribute('scale', {x: 1.3, y: 1.3, z: 1.3});
+          });
+          entity.addEventListener('mouseleave', function () {
+              this.setAttribute('scale', {x: 1, y: 1, z: 1});
+          });
+
+          this.el.appendChild(entity);
+      }
+  }
 });
 
 
