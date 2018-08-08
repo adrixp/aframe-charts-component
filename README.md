@@ -5,6 +5,8 @@
 
 Make 3D Charts with this component based on [A-Frame](https://aframe.io).
 
+![animation](https://github.com/adrixp/aframe-charts-component/blob/master/img/all.gif)
+
 ### API
 
 | Property | Description | Default Value |
