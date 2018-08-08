@@ -43,7 +43,7 @@ Install and use by directly including the [browser files](dist):
 
 <body>
   <a-scene>
-    <a-entity charts="dataPoints: ../data/data.json; type: bar"</a-entity>
+    <a-entity charts="dataPoints: ../data/data.json; type: bar"></a-entity>
   </a-scene>
 </body>
 ```
