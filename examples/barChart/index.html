@@ -8,8 +8,7 @@
         <script src="../../dist/aframe-charts-component.min.js"></script>
     </head>
     <body>
-        <a-scene>
-            <a-sky color="grey"></a-sky>
+        <a-scene background="color: grey">
             <a-light type="point" intensity="1" position="-2 10 10"></a-light>
             <a-entity charts="dataPoints: ../data/data.json; type: bar"></a-entity>
 
