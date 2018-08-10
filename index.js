@@ -9,8 +9,16 @@ if (typeof AFRAME === 'undefined') {
  */
 AFRAME.registerComponent('charts', {
     schema: {
-        type: {type: 'string', default: 'bubble'},
-        dataPoints: {type: 'asset'}
+        type:                 {type: 'string', default: 'bubble'},
+        dataPoints:           {type: 'asset'},
+        axis_position:        {type: 'vec3', default: {x:0, y:0, z:0}},
+        axis_color:           {type: 'string', default: 'red'},
+        axis_length:          {type: 'number', default: 10},
+        axis_grid:            {type: 'boolean', default: false},
+        axis_negative:        {type: 'boolean', default: false},
+        axis_tick_separation: {type: 'number', default: 1},
+        axis_tick_length:     {type: 'number', default: 0.2},
+        axis_tick_color:      {type: 'string', default: 'red'}
     },
 
     /**
@@ -63,15 +71,15 @@ AFRAME.registerComponent('charts', {
 
     onDataLoaded: function (file) {
         let dataPoints = JSON.parse(file);
-        const data = this.data;
+        const properties = this.data;
 
-        generateAxis(this.el);
+        generateAxis(this.el, properties);
 
         for (let point of dataPoints) {
             let entity;
-            if(data.type === "bar"){
+            if(properties.type === "bar"){
                 entity = generateBar(point);
-            }else if(data.type === "cylinder"){
+            }else if(properties.type === "cylinder"){
                 entity = generateCylinder(point);
             }else{
                 entity = generateBubble(point);
@@ -117,38 +125,46 @@ function generateCylinder(point) {
 }
 
 
-function generateAxis(element) {
+function generateAxis(element, properties) {
+    let axis_length = properties.axis_length;
+    let axis_position = properties.axis_position;
+    let axis_color = properties.axis_color;
+
+    let tick_separation = properties.axis_tick_separation;
+    let tick_length = properties.axis_tick_length;
+    let tick_color = properties.axis_tick_color;
+
     for (let axis of ['x', 'y', 'z']) {
 
-        let line_end = {x: 0, y: 0, z: 0};
-        line_end[axis] = 10;
+        let line_end = {x: axis_position.x, y: axis_position.y, z: axis_position.z};
+        line_end[axis] = axis_length;
 
         let axis_line = document.createElement('a-entity');
         axis_line.setAttribute('line', {
-            'start': {x: 0, y: 0, z: 0},
+            'start': {x: axis_position.x, y: axis_position.y, z: axis_position.z},
             'end':   line_end,
-            'color': 'red'
+            'color': axis_color
         });
 
-        for (let tick = 1; tick <= 10; tick++) {
+        for (let tick = tick_separation; tick <= axis_length; tick += tick_separation) {
             let tick_start;
             let tick_end;
 
             if (axis === 'x') {
-                tick_start = {x: tick, y: -0.2, z: 0};
-                tick_end   = {x: tick, y:  0.2, z: 0};
+                tick_start = {x: axis_position.x + tick,         y: axis_position.y - tick_length,  z: axis_position.z};
+                tick_end   = {x: axis_position.x + tick,         y: axis_position.y + tick_length,  z: axis_position.z};
             }else if (axis === 'y') {
-                tick_start = {x: 0, y: tick, z: -0.2};
-                tick_end   = {x: 0, y: tick, z:  0.2};
+                tick_start = {x: axis_position.x,                y: axis_position.y + tick,         z: axis_position.z - tick_length};
+                tick_end   = {x: axis_position.x,                y: axis_position.y + tick,         z: axis_position.z + tick_length};
             }else{
-                tick_start = {x: -0.2, y: 0, z: tick};
-                tick_end   = {x:  0.2, y: 0, z: tick};
+                tick_start = {x: axis_position.x - tick_length,  y: axis_position.y,                z: axis_position.z + tick};
+                tick_end   = {x: axis_position.x + tick_length,  y: axis_position.y,                z: axis_position.z + tick};
             }
 
             axis_line.setAttribute('line__' + tick, {
                 'start': tick_start,
                 'end':   tick_end,
-                'color': 'red'
+                'color': tick_color
             });
         }
         element.appendChild(axis_line);
