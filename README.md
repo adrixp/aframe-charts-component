@@ -19,6 +19,9 @@ Make 3D Charts with this component based on [A-Frame](https://aframe.io).
 | axis_tick_separation         | Set the axis tick separation            |  1             |
 | axis_tick_length         | Set the axis tick length            |  0.2             |
 | axis_tick_color         | Set the axis tick color            |  red             |
+| axis_negative         | Enable negative axis            |  false             |
+| axis_grid         | Enable grid axis            |  false             |
+| axis_grid_3D         | Enable negative 3D axis            |  false             |
 
 ### JSON File
 We need this file wich contains the points in order to generate the chart. The path of this file must be included in dataPoint property.
