@@ -134,19 +134,29 @@ function generateAxis(element, properties) {
     let tick_length = properties.axis_tick_length;
     let tick_color = properties.axis_tick_color;
 
+    let axis_negative = properties.axis_negative;
+    let axis_negative_offset = 0;
+
     for (let axis of ['x', 'y', 'z']) {
 
         let line_end = {x: axis_position.x, y: axis_position.y, z: axis_position.z};
         line_end[axis] = axis_length;
 
+        let line_start = {x: axis_position.x, y: axis_position.y, z: axis_position.z};
+
+        if (axis_negative){
+            axis_negative_offset = axis_length + 1;
+            line_start[axis] = -axis_length;
+        }
+
         let axis_line = document.createElement('a-entity');
         axis_line.setAttribute('line', {
-            'start': {x: axis_position.x, y: axis_position.y, z: axis_position.z},
+            'start': line_start,
             'end':   line_end,
             'color': axis_color
         });
 
-        for (let tick = tick_separation; tick <= axis_length; tick += tick_separation) {
+        for (let tick = tick_separation - axis_negative_offset; tick <= axis_length; tick += tick_separation) {
             let tick_start;
             let tick_end;
 
