@@ -143,8 +143,15 @@ AFRAME.registerComponent('charts', {
     play: function () { },
 
     onDataLoaded: function (file) {
-        let dataPoints = JSON.parse(file);
+        let dataPoints;
+        try{
+            dataPoints = JSON.parse(file);
+        }catch(e) {
+            throw new Error('Can\'t parse JSON file. Maybe is not a valid JSON file'); // error in the above string (in this case, yes)!
+        }
+
         const properties = this.data;
+        console.log(properties);
 
         if(properties.axis_grid || properties.axis_grid_3D){
             generateGridAxis(this.el, properties);

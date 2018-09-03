@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>A-Frame Charts Component</title>
-        <meta name="description" content="Make 3D Charts with this component based on A-Frame."></meta>
+        <meta name="description" content="Make 3D Charts with this component based on A-Frame.">
         <style>
             html {
                 background: #33425B;
@@ -40,30 +40,83 @@
                 height: 320px;
                 width: 320px;
             }
-            ul h3,
-            ul p {
-                max-width: 320px;
+
+            li {
+                width: 30%;
+                font-size: 15px;
+            }
+            .link{
+                height: auto;
+            }
+            .underlineTitle{
+                text-decoration: underline;
+            }
+            pre{
+                background-color: #f6f8fa;
+                color: #032f62;
+                white-space: pre-wrap;
+                display: inline-block;
+                font-size: 13px;
+            }
+            .pl-ent {
+                color: #22863a;
+            }
+            .pl-e{
+                color: #6f42c1;
+            }
+            .pl-s{
+                color: #032f62;
             }
         </style>
     </head>
     <body>
 
         <h1>A-Frame Charts Component</h1>
+        <h3 class="underlineTitle">Current visualizations</h3>
         <ul>
             <li>
-                <a href="examples/basic/" style="background-image: url(img/bubble.gif)"></a>
-                <h3>Basic</h3>
-                <p>This is a basic example.</p>
+                <a href="examples/bubbleChart/" style="background-image: url(img/bubble.gif)"></a>
+                <h3>Bubble Chart</h3>
+                <p>This is the bubble chart example.</p>
+                <p>We only need this piece of html code in order to run it</p>
+                <pre>&lt;<span class="pl-ent">a-entity</span> <span class="pl-e">charts</span>="dataPoints: ../data/data.json; type: bubble"&gt;&lt;/<span class="pl-ent">a-entity</span>&gt;</pre>
+                <a class="link" href="examples/bubbleChart/code.html">Full detailed Code</a>
             </li>
             <li>
                 <a href="examples/barChart/" style="background-image: url(img/bar.gif)"></a>
                 <h3>Bar Chart</h3>
                 <p>This is the bar chart example.</p>
+                <p>We only need this piece of html code in order to run it</p>
+                <pre>&lt;<span class="pl-ent">a-entity</span> <span class="pl-e">charts</span>="dataPoints: ../data/data.json; type: bar"&gt;&lt;/<span class="pl-ent">a-entity</span>&gt;</pre>
+                <a class="link" href="examples/barChart/code.html">Full detailed Code</a>
             </li>
             <li>
                 <a href="examples/cylinderChart/" style="background-image: url(img/cylinder.gif)"></a>
                 <h3>Cylinder Chart</h3>
                 <p>This is the cylinder chart example.</p>
+                <p>We only need this piece of html code in order to run it</p>
+                <pre>&lt;<span class="pl-ent">a-entity</span> <span class="pl-e">charts</span>="dataPoints: ../data/data.json; type: cylinder"&gt;&lt;/<span class="pl-ent">a-entity</span>&gt;</pre>
+                <a class="link" href="examples/cylinderChart/code.html">Full detailed Code</a>
+            </li>
+        </ul>
+
+        <h3 class="underlineTitle">Several Chart options</h3>
+        <ul>
+            <li>
+                <a href="examples/tonsOfData/" style="background-image: url(img/bubble.gif)"></a>
+                <h3>Support Tons of data</h3>
+                <p>We have optimized our library in order to support tons of Data. Click the image to see the example</p>
+            </li>
+            <li>
+                <a href="examples/axis/" style="background-image: url(img/bar.gif)"></a>
+                <h3>Multiple Axis options</h3>
+                <p>We have developed several axis options. Click below in the API link in order to see all the options or in the image to see a visual example</p>
+                <a class="link" href="examples/axis/code.html">API</a>
+            </li>
+            <li>
+                <a href="examples/popup/" style="background-image: url(img/cylinder.gif)"></a>
+                <h3>Pop up Data</h3>
+                <p>In this example we are able to see the data with a pop up</p>
             </li>
         </ul>
 
@@ -76,5 +129,6 @@
         </a>
         <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}
         </style>
+
     </body>
 </html>
