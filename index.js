@@ -75,7 +75,7 @@ AFRAME.registerComponent('charts', {
         try{
             dataPoints = JSON.parse(file);
         }catch(e) {
-            throw new Error('Can\'t parse JSON file. Maybe is not a valid JSON file'); // error in the above string (in this case, yes)!
+            throw new Error('Can\'t parse JSON file. Maybe is not a valid JSON file');
         }
 
         const properties = this.data;
@@ -152,13 +152,13 @@ function generateAxis(element, properties) {
     for (let axis of ['x', 'y', 'z']) {
 
         let line_end = {x: axis_position.x, y: axis_position.y, z: axis_position.z};
-        line_end[axis] = axis_length;
+        line_end[axis] = axis_length + axis_position[axis];
 
         let line_start = {x: axis_position.x, y: axis_position.y, z: axis_position.z};
 
         if (axis_negative){
             axis_negative_offset = axis_length + 1;
-            line_start[axis] = -axis_length;
+            line_start[axis] = -axis_length + axis_position[axis];
         }
 
         let axis_line = document.createElement('a-entity');

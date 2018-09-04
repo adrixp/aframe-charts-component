@@ -2,8 +2,8 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>A-Frame A-Charts Component - Cylinder</title>
-        <meta name="description" content="Cylinder code example for A-Charts component."/>
+        <title>A-Frame A-Charts Component - Bar</title>
+        <meta name="description" content="Bar code example for A-Charts component."/>
         <style>
             html {
                 background: #33425B;
@@ -71,24 +71,76 @@
     </head>
     <body>
 
-        <h1>Cylinder Chart Code</h1>
-        <p>You only need this lines in order to see the cylinder chart.</p>
+        <h1>API</h1>
 
-        <pre>&lt;<span class="pl-ent">head</span>&gt;
-          &lt;<span class="pl-ent">title</span>&gt;My A-Frame Scene&lt;/<span class="pl-ent">title</span>&gt;
-          &lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>https://aframe.io/releases/0.8.2/aframe.min.js<span class="pl-pds">"</span></span>&gt;<span class="pl-s1">&lt;</span>/<span class="pl-ent">script</span>&gt;
-          &lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>https://unpkg.com/aframe-charts-component/dist/aframe-charts-component.min.js<span class="pl-pds">"</span></span>&gt;<span class="pl-s1">&lt;</span>/<span class="pl-ent">script</span>&gt;
-        &lt;/<span class="pl-ent">head</span>&gt;
+        <table>
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Description</th>
+                    <th>Default Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>dataPoints</td>
+                    <td>Path to JSON input data</td>
+                    <td>../data/data.json</td>
+                </tr>
+                <tr>
+                    <td>type</td>
+                    <td>Chart type. Currently we have bubble, bar and cylinder charts</td>
+                    <td>bubble</td>
+                </tr>
+                <tr>
+                    <td>axis_position</td>
+                    <td>Set the axis position</td>
+                    <td>{x:0, y:0, z:0}</td>
+                </tr>
+                <tr>
+                    <td>axis_color</td>
+                    <td>Set the axis color</td>
+                    <td>red</td>
+                </tr>
+                <tr>
+                    <td>axis_length</td>
+                    <td>Set the axis length</td>
+                    <td>10</td>
+                </tr>
+                <tr>
+                    <td>axis_tick_separation</td>
+                    <td>Set the axis tick separation</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>axis_tick_length</td>
+                    <td>Set the axis tick length</td>
+                    <td>0.2</td>
+                </tr>
+                <tr>
+                    <td>axis_tick_color</td>
+                    <td>Set the axis tick color</td>
+                    <td>red</td>
+                </tr>
+                <tr>
+                    <td>axis_negative</td>
+                    <td>Enable negative axis</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>axis_grid</td>
+                    <td>Enable grid axis</td>
+                    <td>false</td>
+                </tr>
+                <tr>
+                    <td>axis_grid_3D</td>
+                    <td>Enable negative 3D axis</td>
+                    <td>false</td>
+                </tr>
+            </tbody>
+        </table>
 
-        &lt;<span class="pl-ent">body</span>&gt;
-          &lt;<span class="pl-ent">a-scene</span>&gt;
-            &lt;<span class="pl-ent">a-entity</span> <span class="pl-e">charts</span>=<span class="pl-s"><span class="pl-pds">"</span>dataPoints: ../data/data.json; type: cylinder<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">a-entity</span>&gt;
-          &lt;/<span class="pl-ent">a-scene</span>&gt;
-        &lt;/<span class="pl-ent">body</span>&gt;</pre>
 
-        <a class="link" href="../../examples/cylinderChart/">Check the visual example</a>
-
-        <a class="link" href="../../examples/api/">See our API for axis options and more</a>
 
         <!-- GitHub Corner. -->
         <a href="https://github.com/adrixp/aframe-charts-component" class="github-corner">
@@ -99,5 +151,5 @@
 
         <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
         <!-- End GitHub Corner. -->
-    </body>
+        </body>
 </html>
