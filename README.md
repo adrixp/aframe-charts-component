@@ -11,15 +11,16 @@ Make 3D Charts with this component based on [A-Frame](https://aframe.io).
 
 | Property | Description | Default Value |
 | -------- | ----------- | ------------- |
+| type         | Chart type. Currently we have bubble, bar and cylinder charts            |  bubble             |
 | dataPoints | Path to JSON input data |  ../data/data.json  |
 | type         | Chart type. Currently we have bubble, bar and cylinder charts            |  bubble             |
 | axis_position         | Set the axis position            |  {x:0, y:0, z:0}           |
 | axis_color         | Set the axis color            |  red             |
-| axis_length         | Set the axis length            |  10             |
+| axis_length         | Set the axis length. By default axis will be adaptive            |  0             |
 | axis_tick_separation         | Set the axis tick separation            |  1             |
 | axis_tick_length         | Set the axis tick length            |  0.2             |
 | axis_tick_color         | Set the axis tick color            |  red             |
-| axis_negative         | Enable negative axis            |  false             |
+| axis_negative         | Enable negative axis            |  true             |
 | axis_grid         | Enable grid axis            |  false             |
 | axis_grid_3D         | Enable negative 3D axis            |  false             |
 

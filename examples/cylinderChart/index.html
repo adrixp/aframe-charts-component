@@ -10,7 +10,7 @@
     <body>
         <a-scene background="color: grey">
             <a-light type="point" intensity="1" position="-2 10 10"></a-light>
-            <a-entity charts="dataPoints: ../data/data.json; type: cylinder"></a-entity>
+            <a-entity charts="type: cylinder; dataPoints: ../data/data.json; axis_length: 15; axis_negative: false"></a-entity>
 
             <a-entity position="2 10 14" rotation="-30 15 0">
                 <a-camera position="3 -1 4" rotation="0 -1 0">
