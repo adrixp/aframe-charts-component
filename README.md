@@ -12,8 +12,7 @@ Make 3D Charts with this component based on [A-Frame](https://aframe.io).
 | Property | Description | Default Value |
 | -------- | ----------- | ------------- |
 | type         | Chart type. Currently we have bubble, pie, bar and cylinder charts            |  bubble             |
-| dataPoints | Path to JSON input data |  ../data/data.json  |
-| type         | Chart type. Currently we have bubble, bar and cylinder charts            |  bubble             |
+| dataPoints | Path to JSON input data |  ../data/data.json  |          |
 | axis_position         | Set the axis position            |  {x:0, y:0, z:0}           |
 | axis_visible         | If false, axis will be hidden            |  true             |
 | axis_color         | Set the axis color            |  red             |

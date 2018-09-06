@@ -4,6 +4,9 @@
         <meta charset="utf-8">
         <title>A-Frame Charts Component</title>
         <meta name="description" content="Make 3D Charts with this component based on A-Frame.">
+        <link rel="stylesheet" href="examples/lib/highlight/dracula.css">
+        <script src="examples/lib/highlight/highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
         <style>
             html {
                 background: #33425B;
@@ -52,21 +55,10 @@
                 text-decoration: underline;
             }
             pre{
-                background-color: #f6f8fa;
-                color: #032f62;
-                white-space: pre-wrap;
-                display: inline-block;
-                font-size: 13px;
-            }
-            .pl-ent {
-                color: #22863a;
-            }
-            .pl-e{
-                color: #6f42c1;
-            }
-            .pl-s{
-                color: #032f62;
-            }
+
+                 white-space: pre-wrap;
+                 display: inline-block;
+             }
         </style>
     </head>
     <body>
@@ -79,7 +71,7 @@
                 <h3>Bubble Chart</h3>
                 <p>This is the bubble chart example.</p>
                 <p>We only need this piece of html code in order to run it</p>
-                <pre>&lt;<span class="pl-ent">a-entity</span> <span class="pl-e">charts</span>="type: bubble; dataPoints: ../data/data.json; axis_negative: false"&gt;&lt;<span class="pl-ent">/a-entity</span>&gt;</pre>
+                <pre><code class="html">&lt;a-entity charts="type: bubble; dataPoints: ../data/data.json; axis_negative: false"&gt;&lt;/a-entity&gt;</code></pre>
                 <a class="link" href="examples/bubbleChart/code.html">Full detailed Code</a>
             </li>
             <li>
@@ -87,7 +79,7 @@
                 <h3>Bar Chart</h3>
                 <p>This is the bar chart example.</p>
                 <p>We only need this piece of html code in order to run it</p>
-                <pre>&lt;<span class="pl-ent">a-entity</span> <span class="pl-e">charts</span>="type: bar; dataPoints: ../data/data.json; axis_length: 12; axis_negative: false"&gt;&lt;<span class="pl-ent">/a-entity</span>&gt;</pre>
+                <pre><code class="html">&lt;a-entity charts="type: bar; dataPoints: ../data/data.json; axis_length: 12; axis_negative: false"&gt;&lt;/a-entity&gt;</code></pre>
                 <a class="link" href="examples/barChart/code.html">Full detailed Code</a>
             </li>
             <li>
@@ -95,7 +87,7 @@
                 <h3>Cylinder Chart</h3>
                 <p>This is the cylinder chart example.</p>
                 <p>We only need this piece of html code in order to run it</p>
-                <pre>&lt;<span class="pl-ent">a-entity</span> <span class="pl-e">charts</span>="type: cylinder; dataPoints: ../data/data.json; axis_length: 15; axis_negative: false"&gt;&lt;<span class="pl-ent">/a-entity</span>&gt;</pre>
+                <pre><code class="html">&lt;a-entity charts="type: bubble; dataPoints: ../data/data.json; axis_negative: false"&gt;&lt;/a-entity&gt;</code></pre>
                 <a class="link" href="examples/cylinderChart/code.html">Full detailed Code</a>
             </li>
             <li>
@@ -103,7 +95,7 @@
                 <h3>Pie Chart</h3>
                 <p>This is the pie chart example.</p>
                 <p>We only need this piece of html code in order to run it</p>
-                <pre>&lt;<span class="pl-ent">a-entity</span> <span class="pl-e">charts</span>="type: pie; dataPoints: ../data/dataPie.json; pie_radius: 3"&gt;&lt;<span class="pl-ent">/a-entity</span>&gt;</pre>
+                <pre><code class="html">&lt;a-entity charts="type: pie; dataPoints: ../data/dataPie.json; pie_radius: 3" position="7 5 5" rotation="90 10 10"&gt;&lt;/a-entity&gt;</code></pre>
                 <a class="link" href="examples/pieChart/code.html">Full detailed Code</a>
             </li>
         </ul>
