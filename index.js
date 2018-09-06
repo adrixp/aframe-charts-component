@@ -11,6 +11,7 @@ AFRAME.registerComponent('charts', {
     schema: {
         type:                 {type: 'string', default: 'bubble'},
         dataPoints:           {type: 'asset'},
+        axis_visible:         {type: 'boolean', default: true},
         axis_position:        {type: 'vec3', default: {x:0, y:0, z:0}},
         axis_color:           {type: 'string', default: 'red'},
         axis_length:          {type: 'number', default: 0},
@@ -19,7 +20,8 @@ AFRAME.registerComponent('charts', {
         axis_tick_color:      {type: 'string', default: 'red'},
         axis_negative:        {type: 'boolean', default: true},
         axis_grid:            {type: 'boolean', default: false},
-        axis_grid_3D:         {type: 'boolean', default: false}
+        axis_grid_3D:         {type: 'boolean', default: false},
+        pie_radius:           {type: 'number', default: 1}
     },
 
     /**
@@ -80,17 +82,31 @@ AFRAME.registerComponent('charts', {
 
         const properties = this.data;
 
-        if(properties.axis_length === 0){
-            let adaptive_props = getAdaptiveAxisProperties(dataPoints);
-            properties.axis_length = adaptive_props.max;
-            if(properties.axis_negative)
-                properties.axis_negative = adaptive_props.has_negative;
+        //Axis generation
+        if(properties.axis_visible || properties.type !== "pie"){
+            if(properties.axis_length === 0){
+                let adaptive_props = getAdaptiveAxisProperties(dataPoints);
+                properties.axis_length = adaptive_props.max;
+                if(properties.axis_negative)
+                    properties.axis_negative = adaptive_props.has_negative;
+            }
+
+            if(properties.axis_grid || properties.axis_grid_3D){
+                generateGridAxis(this.el, properties);
+            }else{
+                generateAxis(this.el, properties);
+            }
         }
 
-        if(properties.axis_grid || properties.axis_grid_3D){
-            generateGridAxis(this.el, properties);
-        }else{
-            generateAxis(this.el, properties);
+        //Chart generation
+        let pie_angle_start = 0;
+        let pie_angle_end = 0;
+        let pie_total_value = 0;
+
+        if(properties.type === "pie"){
+            for (let point of dataPoints) {
+                pie_total_value += point['size'];
+            }
         }
 
         for (let point of dataPoints) {
@@ -99,6 +115,10 @@ AFRAME.registerComponent('charts', {
                 entity = generateBar(point);
             }else if(properties.type === "cylinder"){
                 entity = generateCylinder(point);
+            }else if(properties.type === "pie"){
+                pie_angle_end = 360 * point['size'] / pie_total_value;
+                entity = generateSlice(point, pie_angle_start, pie_angle_end, properties.pie_radius);
+                pie_angle_start += pie_angle_end;
             }else{
                 entity = generateBubble(point);
             }
@@ -114,6 +134,16 @@ AFRAME.registerComponent('charts', {
         }
     }
 });
+
+function generateSlice(point, theta_start, theta_length, radius) {
+    let entity = document.createElement('a-cylinder');
+    entity.setAttribute('color', point['color']);
+    entity.setAttribute('theta-start', theta_start);
+    entity.setAttribute('theta-length', theta_length);
+    entity.setAttribute('side', 'double');
+    entity.setAttribute('radius', radius);
+    return entity;
+}
 
 function generateBubble(point) {
     let entity = document.createElement('a-sphere');

@@ -4,6 +4,9 @@
         <meta charset="utf-8">
         <title>A-Frame A-Charts Component - Bar</title>
         <meta name="description" content="Bar code example for A-Charts component."/>
+        <link rel="stylesheet" href="../lib/highlight/dracula.css">
+        <script src="../lib/highlight/highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
         <style>
             html {
                 background: #33425B;
@@ -13,7 +16,7 @@
                 padding: 10px 20px;
             }
             h1 {
-                font-weight: 300;
+                font-weight: bold;
             }
             a {
                 color: #FAFAFA;
@@ -48,25 +51,6 @@
             .link{
                 height: auto;
             }
-            .underlineTitle{
-                text-decoration: underline;
-            }
-            pre{
-                background-color: #f6f8fa;
-                color: #032f62;
-                white-space: pre-wrap;
-                display: inline-block;
-                font-size: 13px;
-            }
-            .pl-ent {
-                color: #22863a;
-            }
-            .pl-e{
-                color: #6f42c1;
-            }
-            .pl-s .pl-pds{
-                color: #032f62;
-            }
         </style>
     </head>
     <body>
@@ -74,21 +58,63 @@
         <h1>Bar Chart Code</h1>
         <p>You only need this lines in order to see the bar chart.</p>
 
-        <pre>&lt;<span class="pl-ent">head</span>&gt;
-  &lt;<span class="pl-ent">title</span>&gt;My A-Frame Scene&lt;/<span class="pl-ent">title</span>&gt;
-  &lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>https://aframe.io/releases/0.8.2/aframe.min.js<span class="pl-pds">"</span></span>&gt;<span class="pl-s1">&lt;</span>/<span class="pl-ent">script</span>&gt;
-  &lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>https://unpkg.com/aframe-charts-component/dist/aframe-charts-component.min.js<span class="pl-pds">"</span></span>&gt;<span class="pl-s1">&lt;</span>/<span class="pl-ent">script</span>&gt;
-&lt;/<span class="pl-ent">head</span>&gt;
+        <pre><code class="html">&lt;head&gt;
+    &lt;title&gt;My A-Frame Scene&lt;/title&gt;
+    &lt;script src="https://aframe.io/releases/0.8.2/aframe.min.js"&gt;&lt;/script&gt;
+    &lt;script src="https://unpkg.com/aframe-charts-component/dist/aframe-charts-component.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Aframe scene --&gt;
+    &lt;a-scene background="color: grey"&gt;
+        &lt;!-- Aframe light --&gt;
+        &lt;a-light type="point" intensity="1" position="-2 10 10"&gt;&lt;/a-light&gt;
 
-&lt;<span class="pl-ent">body</span>&gt;
-  &lt;<span class="pl-ent">a-scene</span>&gt;
-    &lt;<span class="pl-ent">a-entity</span> <span class="pl-e">charts</span>=<span class="pl-s"><span class="pl-pds">"</span>type: bar; dataPoints: ../data/data.json<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">a-entity</span>&gt;
-  &lt;/<span class="pl-ent">a-scene</span>&gt;
-&lt;/<span class="pl-ent">body</span>&gt;</pre>
+        &lt;!-- Declaring chart component --&gt;
+        &lt;a-entity charts="type: bar; dataPoints: ../data/data.json; axis_length: 12; axis_negative: false"&gt;&lt;/a-entity&gt;
+
+        &lt;!-- Aframe camera --&gt;
+        &lt;a-entity position="2 10 14" rotation="-30 15 0"&gt;
+            &lt;a-camera position="3 -1 4" rotation="0 -1 0"&gt;
+                &lt;a-cursor&gt;&lt;/a-cursor&gt;
+            &lt;/a-camera&gt;
+        &lt;/a-entity&gt;
+    &lt;/a-scene&gt;
+&lt;/body&gt;</code></pre>
 
         <a class="link" href="../../examples/barChart/">Check the visual example</a>
 
         <a class="link" href="../../examples/api/">See our API for axis options and more</a>
+
+        <p>JSON input example</p>
+
+        <pre><code class="json">
+[
+  {"x": 1, "y": 8, "z": 0, "size": 1, "color": "#ff0000"},
+  {"x": -2, "y": 3, "z": 1, "size": 1.5, "color": "#00ff00"},
+  {"x": -1, "y": 3, "z": 2, "size": 1, "color": "#0000ff"},
+  {"x": 2, "y": 7, "z": 7, "size": 1.5, "color": "#0000ff"},
+  {"x": 1, "y": 6, "z": 3, "size": 1, "color": "#4CC3D9"},
+  {"x": 3, "y": 4, "z": 1, "size": 1.5, "color": "#EF2D5E"},
+  {"x": 2, "y": 1, "z": 5, "size": 1, "color": "#ff0000"},
+  {"x": 1, "y": 10, "z": 6, "size": 1.5, "color": "#00ff00"},
+  {"x": 3, "y": 5, "z": 0, "size": 1, "color": "#ff0000"},
+  {"x": -4, "y": 4, "z": 1, "size": 1.5, "color": "#00ff00"},
+  {"x": 5, "y": 9, "z": 1, "size": 1, "color": "#0000ff"},
+  {"x": 6, "y": 4, "z": 10, "size": 1.5, "color": "#0000ff"},
+  {"x": 8, "y": 5, "z": -2, "size": 1, "color": "#4CC3D9"},
+  {"x": 9, "y": 7, "z": 2, "size": 1.5, "color": "#EF2D5E"},
+  {"x": 5, "y": 0, "z": 6, "size": 1, "color": "#ff0000"},
+  {"x": 5, "y": 9, "z": 4, "size": 1.5, "color": "#00ff00"},
+  {"x": 6, "y": 6, "z": 1, "size": 1, "color": "#ff0000"},
+  {"x": -1, "y": 4, "z": 0, "size": 1.5, "color": "#00ff00"},
+  {"x": 4, "y": 2, "z": 5, "size": 1, "color": "#0000ff"},
+  {"x": 7, "y": 1, "z": 8, "size": 1.5, "color": "#0000ff"},
+  {"x": 1, "y": 4, "z": 3, "size": 1, "color": "#4CC3D9"},
+  {"x": 8, "y": 6, "z": 4, "size": 1.5, "color": "#EF2D5E"},
+  {"x": 9, "y": 6, "z": 3, "size": 1, "color": "#ff0000"},
+  {"x": 3, "y": 9, "z": 3, "size": 1.5, "color": "#00ff00"}
+]
+                                </code></pre>
 
         <!-- GitHub Corner. -->
         <a href="https://github.com/adrixp/aframe-charts-component" class="github-corner">

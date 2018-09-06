@@ -4,6 +4,9 @@
         <meta charset="utf-8">
         <title>A-Frame A-Charts Component - Bar</title>
         <meta name="description" content="Bar code example for A-Charts component."/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <style>
             html {
                 background: #33425B;
@@ -73,7 +76,7 @@
 
         <h1>API</h1>
 
-        <table>
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Property</th>
@@ -84,7 +87,7 @@
             <tbody>
                 <tr>
                     <td>type</td>
-                    <td>Chart type. Currently we have bubble, bar and cylinder charts</td>
+                    <td>Chart type. Currently we have bubble, pie, bar and cylinder charts</td>
                     <td>bubble</td>
                 </tr>
                 <tr>
@@ -96,6 +99,11 @@
                     <td>axis_position</td>
                     <td>Set the axis position</td>
                     <td>{x:0, y:0, z:0}</td>
+                </tr>
+                <tr>
+                    <td>axis_visible</td>
+                    <td>If false, axis will be hidden</td>
+                    <td>true</td>
                 </tr>
                 <tr>
                     <td>axis_color</td>
@@ -136,6 +144,11 @@
                     <td>axis_grid_3D</td>
                     <td>Enable negative 3D axis</td>
                     <td>false</td>
+                </tr>
+                <tr>
+                    <td>pie_radius</td>
+                    <td>Pie chart radius</td>
+                    <td>1</td>
                 </tr>
             </tbody>
         </table>
