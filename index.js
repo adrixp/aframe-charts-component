@@ -21,7 +21,8 @@ AFRAME.registerComponent('charts', {
         axis_negative:        {type: 'boolean', default: true},
         axis_grid:            {type: 'boolean', default: false},
         axis_grid_3D:         {type: 'boolean', default: false},
-        pie_radius:           {type: 'number', default: 1}
+        pie_radius:           {type: 'number', default: 1},
+        pie_doughnut:         {type: 'boolean', default: false}
     },
 
     /**
@@ -117,7 +118,11 @@ AFRAME.registerComponent('charts', {
                 entity = generateCylinder(point);
             }else if(properties.type === "pie"){
                 pie_angle_end = 360 * point['size'] / pie_total_value;
-                entity = generateSlice(point, pie_angle_start, pie_angle_end, properties.pie_radius);
+                if(properties.pie_doughnut){
+                    entity = generateDoughnutSlice(point, pie_angle_start, pie_angle_end, properties.pie_radius);
+                }else{
+                    entity = generateSlice(point, pie_angle_start, pie_angle_end, properties.pie_radius);
+                }
                 pie_angle_start += pie_angle_end;
             }else{
                 entity = generateBubble(point);
@@ -142,6 +147,17 @@ function generateSlice(point, theta_start, theta_length, radius) {
     entity.setAttribute('theta-length', theta_length);
     entity.setAttribute('side', 'double');
     entity.setAttribute('radius', radius);
+    return entity;
+}
+
+function generateDoughnutSlice(point, position_start, arc, radius) {
+    let entity = document.createElement('a-torus');
+    entity.setAttribute('color', point['color']);
+    entity.setAttribute('rotation', {x: 0, y: 0, z: position_start});
+    entity.setAttribute('arc', arc);
+    entity.setAttribute('side', 'double');
+    entity.setAttribute('radius', radius);
+    entity.setAttribute('radius-tubular', radius/4);
     return entity;
 }
 
