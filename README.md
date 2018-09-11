@@ -30,7 +30,7 @@ Make 3D Charts with this component based on [A-Frame](https://aframe.io).
 | pie_doughnut         | Pie chart doughnut mode           |  false            |
 
 ### JSON File
-We need this file wich contains the points in order to generate the chart. The path of this file must be included in dataPoint property.
+We need this file which contains the points in order to generate the chart. The path of this file must be included in dataPoint property.
 
 Example JSON file:
 
