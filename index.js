@@ -21,11 +21,12 @@ AFRAME.registerComponent('charts', {
         axis_negative:        {type: 'boolean', default: true},
         axis_grid:            {type: 'boolean', default: false},
         axis_grid_3D:         {type: 'boolean', default: false},
-        pie_radius:           {type: 'number', default: 1},
-        pie_doughnut:         {type: 'boolean', default: false},
         axis_text:            {type: 'boolean', default: true},
         axis_text_color:      {type: 'string', default: 'white'},
         axis_text_size:       {type: 'number', default: 10},
+        pie_radius:           {type: 'number', default: 1},
+        pie_doughnut:         {type: 'boolean', default: false},
+        show_data_point_info: {type: 'boolean', default: false}
     },
 
     /**
@@ -113,6 +114,9 @@ AFRAME.registerComponent('charts', {
             }
         }
 
+        let element = this.el;
+        let popUp;
+
         for (let point of dataPoints) {
             let entity;
             if(properties.type === "bar"){
@@ -133,15 +137,37 @@ AFRAME.registerComponent('charts', {
 
             entity.addEventListener('mouseenter', function () {
                 this.setAttribute('scale', {x: 1.3, y: 1.3, z: 1.3});
+                if(properties.show_data_point_info){
+                    popUp = generatePopUp(point);
+                    element.appendChild(popUp);
+                }
             });
             entity.addEventListener('mouseleave', function () {
                 this.setAttribute('scale', {x: 1, y: 1, z: 1});
+                if(properties.show_data_point_info){
+                    element.removeChild(popUp);
+                }
             });
 
-            this.el.appendChild(entity);
+            element.appendChild(entity);
         }
     }
 });
+
+function generatePopUp(point) {
+    let entity = document.createElement('a-plane');
+    entity.setAttribute('position', {x: point['x'], y: point['y'] + point['size']*2 , z: point['z']});
+    entity.setAttribute('height', '2');
+    entity.setAttribute('width', '2');
+    entity.setAttribute('color', 'white');
+    entity.setAttribute('text', {
+        'value': 'DataPoint:\n"x":' + point['x'] + ',\n"y":' + point['y'] + ',\n"z":' + point['z'] + ',\n"size":' + point['size'],
+        'align': 'center',
+        'width': 6,
+        'color': 'black'
+    });
+    return entity;
+}
 
 function generateSlice(point, theta_start, theta_length, radius) {
     let entity = document.createElement('a-cylinder');

@@ -28,6 +28,7 @@ Make 3D Charts with this component based on [A-Frame](https://aframe.io).
 | axis_text_size         | Set the axis text size           |  10            |
 | pie_radius         | Pie chart radius            |  1             |
 | pie_doughnut         | Pie chart doughnut mode           |  false            |
+| show_data_point_info         | Show data point info in a pop up           |  false            |
 
 ### JSON File
 We need this file which contains the points in order to generate the chart. The path of this file must be included in dataPoint property.

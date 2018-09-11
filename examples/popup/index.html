@@ -2,8 +2,8 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>A-Frame A-Charts Component - Pop up</title>
-        <meta name="description" content="Pop up example for A-Charts component."/>
+        <title>A-Frame A-Charts Component - Bubble</title>
+        <meta name="description" content="Bubble example for A-Charts component."/>
         <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
         <script src="../../dist/aframe-charts-component.min.js"></script>
         <style>
@@ -22,12 +22,9 @@
         <a class="home" href="../../">Home</a>
         <a-scene background="color: grey">
             <a-light type="point" intensity="1" position="-2 10 10"></a-light>
+            <a-entity charts="type: bubble; dataPoints: ../data/dataPositive.json; axis_text_color: black; show_data_point_info: true"></a-entity>
 
-
-            <a-entity charts="type: bubble; dataPoints: ../data/dataPositive.json"></a-entity>
-
-
-            <a-entity position="-2 10 14" rotation="-30 15 0">
+            <a-entity position="2 10 14" rotation="-30 15 0">
                 <a-camera position="3 -1 4" rotation="0 -1 0">
                     <a-cursor></a-cursor>
                 </a-camera>
