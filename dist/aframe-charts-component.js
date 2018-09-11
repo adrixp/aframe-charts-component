@@ -93,7 +93,11 @@ AFRAME.registerComponent('charts', {
         axis_negative:        {type: 'boolean', default: true},
         axis_grid:            {type: 'boolean', default: false},
         axis_grid_3D:         {type: 'boolean', default: false},
-        pie_radius:           {type: 'number', default: 1}
+        pie_radius:           {type: 'number', default: 1},
+        pie_doughnut:         {type: 'boolean', default: false},
+        axis_text:            {type: 'boolean', default: true},
+        axis_text_color:      {type: 'string', default: 'white'},
+        axis_text_size:       {type: 'number', default: 10},
     },
 
     /**
@@ -189,7 +193,11 @@ AFRAME.registerComponent('charts', {
                 entity = generateCylinder(point);
             }else if(properties.type === "pie"){
                 pie_angle_end = 360 * point['size'] / pie_total_value;
-                entity = generateSlice(point, pie_angle_start, pie_angle_end, properties.pie_radius);
+                if(properties.pie_doughnut){
+                    entity = generateDoughnutSlice(point, pie_angle_start, pie_angle_end, properties.pie_radius);
+                }else{
+                    entity = generateSlice(point, pie_angle_start, pie_angle_end, properties.pie_radius);
+                }
                 pie_angle_start += pie_angle_end;
             }else{
                 entity = generateBubble(point);
@@ -198,8 +206,8 @@ AFRAME.registerComponent('charts', {
             entity.addEventListener('mouseenter', function () {
                 this.setAttribute('scale', {x: 1.3, y: 1.3, z: 1.3});
             });
-                entity.addEventListener('mouseleave', function () {
-            this.setAttribute('scale', {x: 1, y: 1, z: 1});
+            entity.addEventListener('mouseleave', function () {
+                this.setAttribute('scale', {x: 1, y: 1, z: 1});
             });
 
             this.el.appendChild(entity);
@@ -214,6 +222,17 @@ function generateSlice(point, theta_start, theta_length, radius) {
     entity.setAttribute('theta-length', theta_length);
     entity.setAttribute('side', 'double');
     entity.setAttribute('radius', radius);
+    return entity;
+}
+
+function generateDoughnutSlice(point, position_start, arc, radius) {
+    let entity = document.createElement('a-torus');
+    entity.setAttribute('color', point['color']);
+    entity.setAttribute('rotation', {x: 0, y: 0, z: position_start});
+    entity.setAttribute('arc', arc);
+    entity.setAttribute('side', 'double');
+    entity.setAttribute('radius', radius);
+    entity.setAttribute('radius-tubular', radius/4);
     return entity;
 }
 
@@ -257,6 +276,10 @@ function generateAxis(element, properties) {
     let axis_negative = properties.axis_negative;
     let axis_negative_offset = 0;
 
+    let axis_text = properties.axis_text;
+    let axis_text_color = properties.axis_text_color;
+    let axis_text_size = properties.axis_text_size;
+
     for (let axis of ['x', 'y', 'z']) {
 
         let line_end = {x: axis_position.x, y: axis_position.y, z: axis_position.z};
@@ -275,6 +298,7 @@ function generateAxis(element, properties) {
             'end':   line_end,
             'color': axis_color
         });
+
 
         for (let tick = tick_separation - axis_negative_offset; tick <= axis_length; tick += tick_separation) {
             let tick_start;
@@ -296,6 +320,38 @@ function generateAxis(element, properties) {
                 'end':   tick_end,
                 'color': tick_color
             });
+
+
+            if(axis_text){
+                let axis_text = document.createElement('a-text');
+                axis_text.setAttribute('position', tick_start);
+
+                if (axis === 'x') {
+                    axis_text.setAttribute('text__' + tick, {
+                        'value': Math.round(tick * 100) / 100,
+                        'width': axis_text_size,
+                        'color': axis_text_color,
+                        'xOffset': 5
+                    });
+                }else if (axis === 'y') {
+                    axis_text.setAttribute('text__' + tick, {
+                        'value': Math.round(tick * 100) / 100,
+                        'width': axis_text_size,
+                        'color': axis_text_color,
+                        'xOffset': 4
+                    });
+                }else{
+                    axis_text.setAttribute('text__' + tick, {
+                        'value': Math.round(tick * 100) / 100,
+                        'width': axis_text_size,
+                        'color': axis_text_color,
+                        'xOffset': 4.5
+                    });
+                }
+
+                element.appendChild(axis_text);
+            }
+
         }
         element.appendChild(axis_line);
     }
@@ -310,6 +366,10 @@ function generateGridAxis(element, properties) {
     let axis_negative_offset = 0;
     let axis_negative_limit = 0;
     let axis_grid_3D = properties.axis_grid_3D;
+
+    let axis_text = properties.axis_text;
+    let axis_text_color = properties.axis_text_color;
+    let axis_text_size = properties.axis_text_size;
 
     for (let axis of ['x', 'y', 'z']) {
 
@@ -354,6 +414,36 @@ function generateGridAxis(element, properties) {
                 grid_end   = {x: axis_position.x,                         y: axis_position.y + axis_length,           z: axis_position.z + tick};
             }
 
+            if(axis_text){
+                let axis_text = document.createElement('a-text');
+                axis_text.setAttribute('position', tick_end);
+
+                if (axis === 'x') {
+                    axis_text.setAttribute('text__' + tick, {
+                        'value': Math.round(tick * 100) / 100,
+                        'width': axis_text_size,
+                        'color': axis_text_color,
+                        'xOffset': 5
+                    });
+                }else if (axis === 'y') {
+                    axis_text.setAttribute('text__' + tick, {
+                        'value': Math.round(tick * 100) / 100,
+                        'width': axis_text_size,
+                        'color': axis_text_color,
+                        'xOffset': 4
+                    });
+                }else{
+                    axis_text.setAttribute('text__' + tick, {
+                        'value': Math.round(tick * 100) / 100,
+                        'width': axis_text_size,
+                        'color': axis_text_color,
+                        'xOffset': 4.5
+                    });
+                }
+
+                element.appendChild(axis_text);
+            }
+
             axis_line.setAttribute('line__' + tick, {
                 'start': tick_start,
                 'end':   tick_end,
@@ -389,6 +479,7 @@ function generateGridAxis(element, properties) {
                     });
                 }
             }
+
         }
         element.appendChild(axis_line);
     }
