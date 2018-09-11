@@ -11,7 +11,7 @@ Make 3D Charts with this component based on [A-Frame](https://aframe.io).
 
 | Property | Description | Default Value |
 | -------- | ----------- | ------------- |
-| type         | Chart type. Currently we have bubble, pie, bar and cylinder charts            |  bubble             |
+| type         | Chart type. Currently we have bubble, pie, doughnut, bar and cylinder charts            |  bubble             |
 | dataPoints | Path to JSON input data |  ../data/data.json  |          |
 | axis_position         | Set the axis position            |  {x:0, y:0, z:0}           |
 | axis_visible         | If false, axis will be hidden            |  true             |
@@ -20,10 +20,14 @@ Make 3D Charts with this component based on [A-Frame](https://aframe.io).
 | axis_tick_separation         | Set the axis tick separation            |  1             |
 | axis_tick_length         | Set the axis tick length            |  0.2             |
 | axis_tick_color         | Set the axis tick color            |  red             |
-| axis_negative         | Enable negative axis            |  true             |
+| axis_negative         | Enable negative axis. If all your dataPoints were positive, you would need to set axis_length in order to activate. If not, axis are adaptive to dataPoints by default            |  true             |
 | axis_grid         | Enable grid axis            |  false             |
 | axis_grid_3D         | Enable negative 3D axis            |  false             |
+| axis_text         | Enable axis values            |  true             |
+| axis_text_color         | Set the axis text color            |  white             |
+| axis_text_size         | Set the axis text size           |  10            |
 | pie_radius         | Pie chart radius            |  1             |
+| pie_doughnut         | Pie chart doughnut mode           |  false            |
 
 ### JSON File
 We need this file wich contains the points in order to generate the chart. The path of this file must be included in dataPoint property.

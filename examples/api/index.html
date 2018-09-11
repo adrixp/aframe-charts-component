@@ -10,7 +10,6 @@
         <style>
             html {
                 background: #33425B;
-                color: #FAFAFA;
                 font-family: monospace;
                 font-size: 20px;
                 padding: 10px 20px;
@@ -18,64 +17,12 @@
             h1 {
                 font-weight: 300;
             }
-            a {
-                color: #FAFAFA;
-                display: block;
-                padding: 15px 0;
-            }
-            img {
-                max-width: 320px;
-            }
-            ul {
-                display: flex;
-                list-style: none;
-                flex-wrap: wrap;
-                padding: 5px 0 0;
-            }
-            ul li {
-                margin-right: 30px;
-                padding: 5px 0 30px;
-            }
-            ul a {
-                background-size: cover;
-                display: block;
-                padding: 0;
-                height: 320px;
-                width: 320px;
-            }
-            ul h3,
-            li {
-                width: 30%;
-                font-size: 15px;
-            }
-            .link{
-                height: auto;
-            }
-            .underlineTitle{
-                text-decoration: underline;
-            }
-            pre{
-                background-color: #f6f8fa;
-                color: #032f62;
-                white-space: pre-wrap;
-                display: inline-block;
-                font-size: 13px;
-            }
-            .pl-ent {
-                color: #22863a;
-            }
-            .pl-e{
-                color: #6f42c1;
-            }
-            .pl-s .pl-pds{
-                color: #032f62;
-            }
             .home{
-                height: auto;
+                color: white !important;
+                font-weight: bold;
                 text-decoration: underline;
                 position: absolute;
-                margin: -40px -10px;;
-                float: left;
+                margin: -30px 5px;
             }
         </style>
     </head>
@@ -140,7 +87,7 @@
                 </tr>
                 <tr>
                     <td>axis_negative</td>
-                    <td>Enable negative axis</td>
+                    <td>Enable negative axis. If all your dataPoints were positive, you would need to set axis_length in order to activate. If not, axis are adaptive to dataPoints by default</td>
                     <td>true</td>
                 </tr>
                 <tr>
@@ -154,9 +101,29 @@
                     <td>false</td>
                 </tr>
                 <tr>
+                    <td>axis_text</td>
+                    <td>Enable axis values</td>
+                    <td>true</td>
+                </tr>
+                <tr>
+                    <td>axis_text_color</td>
+                    <td>Set the axis text color</td>
+                    <td>white</td>
+                </tr>
+                <tr>
+                    <td>axis_text_size</td>
+                    <td>Set the axis text size</td>
+                    <td>10</td>
+                </tr>
+                <tr>
                     <td>pie_radius</td>
                     <td>Pie chart radius</td>
                     <td>1</td>
+                </tr>
+                <tr>
+                    <td>pie_doughnut</td>
+                    <td>Pie chart doughnut mode</td>
+                    <td>false</td>
                 </tr>
             </tbody>
         </table>
