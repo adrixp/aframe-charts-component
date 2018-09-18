@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>A-Frame A-Charts Component - Pop uo</title>
+        <title>A-Frame A-Charts Component - Pop up</title>
         <meta name="description" content="Pop up code example for A-Charts component."/>
         <link rel="stylesheet" href="../lib/highlight/dracula.css">
         <script src="../lib/highlight/highlight.pack.js"></script>
@@ -38,7 +38,7 @@
 
         <a class="home" href="../../">Home</a>
         <h1>Pop up Chart Code</h1>
-        <p>You only need this lines in order to see the bubble chart.</p>
+        <p>You only need this lines in order to see a pop up in the chart.</p>
 
         <pre><code class="html">&lt;head&gt;
     &lt;title&gt;My A-Frame Scene&lt;/title&gt;
@@ -52,7 +52,7 @@
         &lt;a-light type="point" intensity="1" position="-2 10 10"&gt;&lt;/a-light&gt;
 
         &lt;!-- Declaring chart component --&gt;
-        &lt;a-entity charts="type: bubble; dataPoints: ../data/dataPositive.json; axis_text_color: black; show_data_point_info: true"&gt;&lt;/a-entity&gt;
+        &lt;a-entity charts="type: bar; dataPoints: ../data/dataPopUp.json; axis_text_color: black; show_popup_info: true"&gt;&lt;/a-entity&gt;
 
         &lt;!-- Aframe camera --&gt;
         &lt;a-entity position="2 10 14" rotation="-30 15 0"&gt;
@@ -71,27 +71,27 @@
 
         <pre><code class="json">
 [
-  {"x": 1, "y": 8, "z": 0, "size": 1, "color": "#ff0000"},
-  {"x": 2, "y": 7, "z": 7, "size": 1.5, "color": "#0000ff"},
-  {"x": 1, "y": 6, "z": 3, "size": 1, "color": "#4CC3D9"},
-  {"x": 3, "y": 4, "z": 1, "size": 1.5, "color": "#EF2D5E"},
-  {"x": 2, "y": 1, "z": 5, "size": 1, "color": "#ff0000"},
-  {"x": 1, "y": 10, "z": 6, "size": 1.5, "color": "#00ff00"},
-  {"x": 3, "y": 5, "z": 0, "size": 1, "color": "#ff0000"},
-  {"x": 5, "y": 9, "z": 1, "size": 1, "color": "#0000ff"},
-  {"x": 6, "y": 4, "z": 10, "size": 1.5, "color": "#0000ff"},
-  {"x": 9, "y": 7, "z": 2, "size": 1.5, "color": "#EF2D5E"},
-  {"x": 5, "y": 0, "z": 6, "size": 1, "color": "#ff0000"},
-  {"x": 5, "y": 9, "z": 4, "size": 1.5, "color": "#00ff00"},
-  {"x": 6, "y": 6, "z": 1, "size": 1, "color": "#ff0000"},
-  {"x": 4, "y": 2, "z": 5, "size": 1, "color": "#0000ff"},
-  {"x": 7, "y": 1, "z": 8, "size": 1.5, "color": "#0000ff"},
-  {"x": 1, "y": 4, "z": 3, "size": 1, "color": "#4CC3D9"},
-  {"x": 8, "y": 6, "z": 4, "size": 1.5, "color": "#EF2D5E"},
-  {"x": 9, "y": 6, "z": 3, "size": 1, "color": "#ff0000"},
-  {"x": 3, "y": 9, "z": 3, "size": 1.5, "color": "#00ff00"}
+  {"x": 1, "y": 8, "z": 0, "size": 1, "color": "#ff0000", "label": "Japan"},
+  {"x": 2, "y": 7, "z": 7, "size": 1.5, "color": "#0000ff", "label": "USA"},
+  {"x": 1, "y": 6, "z": 3, "size": 1, "color": "#4CC3D9", "label": "Mexico"},
+  {"x": 3, "y": 4, "z": 1, "size": 1.5, "color": "#EF2D5E", "label": "Spain"},
+  {"x": 2, "y": 1, "z": 5, "size": 1, "color": "#ff0000", "label": "Italy"},
+  {"x": 1, "y": 10, "z": 6, "size": 1.5, "color": "#00ff00", "label": "Australia"},
+  {"x": 3, "y": 5, "z": 0, "size": 1, "color": "#ff0000", "label": "UK"},
+  {"x": 5, "y": 9, "z": 1, "size": 1, "color": "#0000ff", "label": "Germany"},
+  {"x": 6, "y": 4, "z": 10, "size": 1.5, "color": "#0000ff", "label": "Portugal"},
+  {"x": 9, "y": 7, "z": 2, "size": 1.5, "color": "#EF2D5E", "label": "Colombia"},
+  {"x": 5, "y": 0, "z": 6, "size": 1, "color": "#ff0000", "label": "Peru"},
+  {"x": 5, "y": 9, "z": 4, "size": 1.5, "color": "#00ff00", "label": "China"},
+  {"x": 6, "y": 6, "z": 1, "size": 1, "color": "#ff0000", "label": "India"},
+  {"x": 4, "y": 2, "z": 5, "size": 1, "color": "#0000ff", "label": "Afghanistan"},
+  {"x": 7, "y": 1, "z": 8, "size": 1.5, "color": "#0000ff", "label": "Morocco"},
+  {"x": 1, "y": 4, "z": 3, "size": 1, "color": "#4CC3D9", "label": "Greece"},
+  {"x": 8, "y": 6, "z": 4, "size": 1.5, "color": "#EF2D5E", "label": "Ireland"},
+  {"x": 9, "y": 6, "z": 3, "size": 1, "color": "#ff0000", "label": "Russia"},
+  {"x": 3, "y": 9, "z": 3, "size": 1.5, "color": "#00ff00", "label": "Canada"}
 ]
-                        </code></pre>
+        </code></pre>
 
         <!-- GitHub Corner. -->
         <a href="https://github.com/adrixp/aframe-charts-component" class="github-corner">

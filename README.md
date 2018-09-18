@@ -28,7 +28,11 @@ Make 3D Charts with this component based on [A-Frame](https://aframe.io).
 | axis_text_size         | Set the axis text size           |  10            |
 | pie_radius         | Pie chart radius            |  1             |
 | pie_doughnut         | Pie chart doughnut mode           |  false            |
-| show_data_point_info         | Show data point info in a pop up           |  false            |
+| show_popup_info         | Show data point info in a pop up. Doesn't work for pie or doughnut chart           |  false            |
+| show_legend_info         | Show data point info in a legend           |  false            |
+| show_legend_position         | Set the legend position. Only works if show legend info property is true           |  {x:0, y:0, z:0}            |
+| show_legend_rotation         | Set the legend rotation. Only works if show legend info property is true           |  {x:0, y:0, z:0}            |
+| show_legend_title         | Title appearing in legend           |  Legend            |
 
 ### JSON File
 We need this file which contains the points in order to generate the chart. The path of this file must be included in dataPoint property.

@@ -26,7 +26,11 @@ AFRAME.registerComponent('charts', {
         axis_text_size:       {type: 'number', default: 10},
         pie_radius:           {type: 'number', default: 1},
         pie_doughnut:         {type: 'boolean', default: false},
-        show_data_point_info: {type: 'boolean', default: false}
+        show_popup_info:      {type: 'boolean', default: false},
+        show_legend_info:     {type: 'boolean', default: false},
+        show_legend_position: {type: 'vec3', default: {x:0, y:0, z:0}},
+        show_legend_rotation: {type: 'vec3', default: {x:0, y:0, z:0}},
+        show_legend_title:    {type: 'string', default: 'Legend'}
     },
 
     /**
@@ -88,7 +92,7 @@ AFRAME.registerComponent('charts', {
         const properties = this.data;
 
         //Axis generation
-        if(properties.axis_visible || properties.type !== "pie"){
+        if(properties.axis_visible && properties.type !== "pie"){
             if(properties.axis_length === 0){
                 let adaptive_props = getAdaptiveAxisProperties(dataPoints);
                 properties.axis_length = adaptive_props.max;
@@ -110,12 +114,15 @@ AFRAME.registerComponent('charts', {
 
         if(properties.type === "pie"){
             for (let point of dataPoints) {
-                pie_total_value += point['size'];
+                pie_total_value += point['y'];
             }
         }
 
         let element = this.el;
         let popUp;
+        let show_popup_condition = properties.show_popup_info && properties.type !== "pie" && !properties.pie_doughnut;
+        let show_legend_condition = properties.show_legend_info;
+        let legend;
 
         for (let point of dataPoints) {
             let entity;
@@ -124,7 +131,7 @@ AFRAME.registerComponent('charts', {
             }else if(properties.type === "cylinder"){
                 entity = generateCylinder(point);
             }else if(properties.type === "pie"){
-                pie_angle_end = 360 * point['size'] / pie_total_value;
+                pie_angle_end = 360 * point['y'] / pie_total_value;
                 if(properties.pie_doughnut){
                     entity = generateDoughnutSlice(point, pie_angle_start, pie_angle_end, properties.pie_radius);
                 }else{
@@ -135,19 +142,24 @@ AFRAME.registerComponent('charts', {
                 entity = generateBubble(point);
             }
 
-            let show_data_condition = properties.show_data_point_info && properties.type !== "pie" && !properties.pie_doughnut;
-
             entity.addEventListener('mouseenter', function () {
                 this.setAttribute('scale', {x: 1.3, y: 1.3, z: 1.3});
-                if(show_data_condition){
+                if(show_popup_condition){
                     popUp = generatePopUp(point, properties);
                     element.appendChild(popUp);
+                }
+                if(show_legend_condition){
+                    legend = generateLegend(dataPoints, point, properties);
+                    element.appendChild(legend);
                 }
             });
             entity.addEventListener('mouseleave', function () {
                 this.setAttribute('scale', {x: 1, y: 1, z: 1});
-                if(show_data_condition){
+                if(show_popup_condition){
                     element.removeChild(popUp);
+                }
+                if(show_legend_condition){
+                    element.removeChild(legend);
                 }
             });
 
@@ -161,16 +173,52 @@ function generatePopUp(point, properties) {
     if(properties.type === "bar" || properties.type === "bar")
         correction = point['size']/2;
 
+    let text = point['label'] + ': ' + point['y'];
+
+    let width = 2;
+    if(text.length > 16)
+        width = text.length/8;
+
     let entity = document.createElement('a-plane');
     entity.setAttribute('position', {x: point['x'] + correction, y: point['y'] + point['size']*2 , z: point['z']});
     entity.setAttribute('height', '2');
-    entity.setAttribute('width', '2');
+    entity.setAttribute('width', width);
     entity.setAttribute('color', 'white');
     entity.setAttribute('text', {
-        'value': 'DataPoint:\n"x":' + point['x'] + ',\n"y":' + point['y'] + ',\n"z":' + point['z'] + ',\n"size":' + point['size'],
+        'value': 'DataPoint:\n\n' + text,
         'align': 'center',
         'width': 6,
         'color': 'black'
+    });
+    entity.setAttribute('light', {
+        'intensity': 0.3
+    });
+    return entity;
+}
+
+function generateLegend(dataPoints, point, properties) {
+    let height = 2;
+    if(dataPoints.length + 2 > 8)
+        height = dataPoints.length/4;
+
+    let text = properties.show_legend_title + "\n";
+    console.log(text);
+
+    let width = 2;
+    if(text.length > 16)
+        width = text.length/8;
+
+    let entity = document.createElement('a-plane');
+    entity.setAttribute('position', properties.show_legend_position);
+    entity.setAttribute('rotation', properties.show_legend_rotation);
+    entity.setAttribute('height', height);
+    entity.setAttribute('width', width);
+    entity.setAttribute('color', 'white');
+    entity.setAttribute('text', {
+        'value': text,
+        'align': 'center',
+        'width': 6,
+        'color': point['color']
     });
     entity.setAttribute('light', {
         'intensity': 0.3

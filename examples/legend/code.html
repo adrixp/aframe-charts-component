@@ -2,8 +2,8 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>A-Frame A-Charts Component - Pie</title>
-        <meta name="description" content="Pie code example for A-Charts component."/>
+        <title>A-Frame A-Charts Component - Legend</title>
+        <meta name="description" content="Legend code example for A-Charts component."/>
         <link rel="stylesheet" href="../lib/highlight/dracula.css">
         <script src="../lib/highlight/highlight.pack.js"></script>
         <script>hljs.initHighlightingOnLoad();</script>
@@ -37,8 +37,8 @@
     <body>
 
         <a class="home" href="../../">Home</a>
-        <h1>Pie Chart Code</h1>
-        <p>You only need this lines in order to see the pie chart.</p>
+        <h1>Legend Chart Code</h1>
+        <p>You only need this lines in order to see a legend in the chart.</p>
 
         <pre><code class="html">&lt;head&gt;
     &lt;title&gt;My A-Frame Scene&lt;/title&gt;
@@ -52,7 +52,7 @@
         &lt;a-light type="point" intensity="1" position="-2 10 10"&gt;&lt;/a-light&gt;
 
         &lt;!-- Declaring chart component --&gt;
-        &lt;a-entity charts="type: pie; dataPoints: ../data/dataPie.json; pie_radius: 3"
+        &lt;a-entity charts="type: pie; dataPoints: ../data/dataLegend.json; pie_radius: 3; show_legend_info: true"
             position="7 5 5" rotation="90 10 10"&gt;&lt;/a-entity&gt;
 
         &lt;!-- Aframe camera --&gt;
@@ -64,7 +64,7 @@
     &lt;/a-scene&gt;
 &lt;/body&gt;</code></pre>
 
-        <a class="link" href="../../examples/pieChart/">Check the visual example</a>
+        <a class="link" href="../../examples/legend/">Check the visual example</a>
 
         <a class="link" href="../../examples/api/">See our API for axis options and more</a>
 
@@ -72,11 +72,11 @@
 
         <pre><code class="json">
 [
-  {"y": 1, "color": "#ff0000"},
-  {"y": 1, "color": "#00ff00"},
-  {"y": 2, "color": "#0000ff"},
-  {"y": 1.5, "color": "#0000ff"},
-  {"y": 4, "color": "#4CC3D9"}
+  {"y": 1, "color": "#ff0000", "label": "USA"},
+  {"y": 1, "color": "#00ff00", "label": "Spain"},
+  {"y": 2, "color": "#0000ff", "label": "Mexico"},
+  {"y": 1.5, "color": "#0000ff", "label": "Japan"},
+  {"y": 4, "color": "#4CC3D9", "label": "India"}
 ]
         </code></pre>
 
