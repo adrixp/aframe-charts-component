@@ -135,16 +135,18 @@ AFRAME.registerComponent('charts', {
                 entity = generateBubble(point);
             }
 
+            let show_data_condition = properties.show_data_point_info && properties.type !== "pie" && !properties.pie_doughnut;
+
             entity.addEventListener('mouseenter', function () {
                 this.setAttribute('scale', {x: 1.3, y: 1.3, z: 1.3});
-                if(properties.show_data_point_info){
-                    popUp = generatePopUp(point);
+                if(show_data_condition){
+                    popUp = generatePopUp(point, properties);
                     element.appendChild(popUp);
                 }
             });
             entity.addEventListener('mouseleave', function () {
                 this.setAttribute('scale', {x: 1, y: 1, z: 1});
-                if(properties.show_data_point_info){
+                if(show_data_condition){
                     element.removeChild(popUp);
                 }
             });
@@ -154,9 +156,13 @@ AFRAME.registerComponent('charts', {
     }
 });
 
-function generatePopUp(point) {
+function generatePopUp(point, properties) {
+    let correction = 0;
+    if(properties.type === "bar" || properties.type === "bar")
+        correction = point['size']/2;
+
     let entity = document.createElement('a-plane');
-    entity.setAttribute('position', {x: point['x'], y: point['y'] + point['size']*2 , z: point['z']});
+    entity.setAttribute('position', {x: point['x'] + correction, y: point['y'] + point['size']*2 , z: point['z']});
     entity.setAttribute('height', '2');
     entity.setAttribute('width', '2');
     entity.setAttribute('color', 'white');
@@ -165,6 +171,9 @@ function generatePopUp(point) {
         'align': 'center',
         'width': 6,
         'color': 'black'
+    });
+    entity.setAttribute('light', {
+        'intensity': 0.3
     });
     return entity;
 }
