@@ -280,9 +280,6 @@ function generateLegendTitle(legendProperties) {
         'width': 8,
         'color': 'black'
     });
-    entity.setAttribute('light', {
-        'intensity': 0.3
-    });
     return entity;
 }
 
