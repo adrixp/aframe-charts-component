@@ -1,7 +1,7 @@
 [
-  {"y": 1, "color": "#ff0000"},
-  {"y": 1, "color": "#00ff00"},
-  {"y": 2, "color": "#0000ff"},
-  {"y": 1.5, "color": "#0000ff"},
-  {"y": 4, "color": "#4CC3D9"}
+  {"size": 1, "color": "#ff0000"},
+  {"size": 1, "color": "#00ff00"},
+  {"size": 2, "color": "#0000ff"},
+  {"size": 1.5, "color": "#0000ff"},
+  {"size": 4, "color": "#4CC3D9"}
 ]

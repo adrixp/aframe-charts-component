@@ -52,12 +52,11 @@
         &lt;a-light type="point" intensity="1" position="-2 10 10"&gt;&lt;/a-light&gt;
 
         &lt;!-- Declaring chart component --&gt;
-        &lt;a-entity charts="type: pie; dataPoints: ../data/dataPie.json; pie_radius: 3; pie_doughnut: true"
-            rotation="0 0 0" position="5 3 0"&gt;&lt;/a-entity&gt;
+        &lt;a-entity charts="type: pie; dataPoints: ../data/dataPie.json; pie_radius: 3; pie_doughnut: true"&gt;&lt;/a-entity&gt;
 
         &lt;!-- Aframe camera --&gt;
-        &lt;a-entity position="2 10 14" rotation="-30 15 0"&gt;
-            &lt;a-camera position="3 -1 4" rotation="0 -1 0"&gt;
+        &lt;a-entity position="1 18 18" rotation="-30 15 0"&gt;
+            &lt;a-camera&gt;
                 &lt;a-cursor&gt;&lt;/a-cursor&gt;
             &lt;/a-camera&gt;
         &lt;/a-entity&gt;
@@ -72,11 +71,11 @@
 
         <pre><code class="json">
 [
-  {"y": 1, "color": "#ff0000"},
-  {"y": 1, "color": "#00ff00"},
-  {"y": 2, "color": "#0000ff"},
-  {"y": 1.5, "color": "#0000ff"},
-  {"y": 4, "color": "#4CC3D9"}
+  {"size": 1, "color": "#ff0000"},
+  {"size": 1, "color": "#00ff00"},
+  {"size": 2, "color": "#0000ff"},
+  {"size": 1.5, "color": "#0000ff"},
+  {"size": 4, "color": "#4CC3D9"}
 ]
         </code></pre>
 

@@ -106,8 +106,8 @@ AFRAME.registerComponent('charts', {
         if(show_legend_condition && dataPoints.length > 0){
             legend_properties = getLegendProperties(dataPoints, properties, element);
             legend_title = generateLegendTitle(legend_properties);
-            legend_sel_text = generateLegendSelText(legend_properties, dataPoints[0]);
-            legend_all_text = generateLegendAllText(legend_properties, getLegendText(dataPoints, dataPoints[0]));
+            legend_sel_text = generateLegendSelText(legend_properties, dataPoints[0], properties);
+            legend_all_text = generateLegendAllText(legend_properties, getLegendText(dataPoints, dataPoints[0], properties));
             element.appendChild(legend_title);
             element.appendChild(legend_sel_text);
             element.appendChild(legend_all_text);
@@ -120,7 +120,7 @@ AFRAME.registerComponent('charts', {
 
         if(properties.type === "pie"){
             for (let point of dataPoints) {
-                pie_total_value += point['y'];
+                pie_total_value += point['size'];
             }
         }
 
@@ -132,7 +132,7 @@ AFRAME.registerComponent('charts', {
             }else if(properties.type === "cylinder"){
                 entity = generateCylinder(point);
             }else if(properties.type === "pie"){
-                pie_angle_end = 360 * point['y'] / pie_total_value;
+                pie_angle_end = 360 * point['size'] / pie_total_value;
                 if(properties.pie_doughnut){
                     entity = generateDoughnutSlice(point, pie_angle_start, pie_angle_end, properties.pie_radius);
                 }else{
@@ -152,8 +152,8 @@ AFRAME.registerComponent('charts', {
                 if(show_legend_condition){
                     element.removeChild(legend_sel_text);
                     element.removeChild(legend_all_text);
-                    legend_sel_text = generateLegendSelText(legend_properties, point);
-                    legend_all_text = generateLegendAllText(legend_properties, getLegendText(dataPoints, point));
+                    legend_sel_text = generateLegendSelText(legend_properties, point, properties);
+                    legend_all_text = generateLegendAllText(legend_properties, getLegendText(dataPoints, point, properties));
                     element.appendChild(legend_sel_text);
                     element.appendChild(legend_all_text);
                 }
@@ -235,7 +235,12 @@ function getLegendProperties(dataPoints, properties, element){
 
     let max_width_text = properties.show_legend_title.length;
     for(let point of dataPoints){
-        let point_text = point['label'] + ': ' + point['y'];
+        let point_text = point['label'] + ': ';
+        if(properties.type === 'pie'){
+            point_text += point['size'];
+        }else{
+            point_text += point['y'];
+        }
         if(point_text.length > max_width_text)
             max_width_text = point_text.length;
     }
@@ -250,13 +255,12 @@ function getLegendProperties(dataPoints, properties, element){
     let position_all_text = {x: properties.show_legend_position.x - chart_position.x, y: properties.show_legend_position.y - chart_position.y,                    z: properties.show_legend_position.z - chart_position.z};
 
     let chart_rotation = getRotation(element);
-    console.log(chart_rotation);
     let rotation = {x: properties.show_legend_rotation.x - chart_rotation.x, y: properties.show_legend_rotation.y - chart_rotation.y, z: properties.show_legend_rotation.z - chart_rotation.z};
 
     return {height: height, width: width, title: properties.show_legend_title, rotation: rotation, position_tit: position_tit, position_sel_text: position_sel_text, position_all_text: position_all_text}
 }
 
-function getLegendText(dataPoints, point) {
+function getLegendText(dataPoints, point, properties) {
     let text = "";
 
     let auxDataPoints = dataPoints.slice();
@@ -264,7 +268,11 @@ function getLegendText(dataPoints, point) {
     auxDataPoints.splice(index, 1);
 
     for(let i = 0; i < auxDataPoints.length; i++){
-        text += auxDataPoints[i]['label'] + ': ' + auxDataPoints[i]['y'];
+        if(properties.type === 'pie'){
+            text += auxDataPoints[i]['label'] + ': ' + auxDataPoints[i]['size'];
+        }else{
+            text += auxDataPoints[i]['label'] + ': ' + auxDataPoints[i]['y'];
+        }
         if(i !== auxDataPoints.length -1 )
             text += "\n";
     }
@@ -288,7 +296,14 @@ function generateLegendTitle(legendProperties) {
     return entity;
 }
 
-function generateLegendSelText(legendProperties, point) {
+function generateLegendSelText(legendProperties, point, properties) {
+    let value = "";
+    if(properties.type === 'pie'){
+        value =  point['size'];
+    }else{
+        value =  point['y'];
+    }
+
     let entity = document.createElement('a-plane');
     entity.setAttribute('position', legendProperties.position_sel_text);
     entity.setAttribute('rotation', legendProperties.rotation);
@@ -296,7 +311,7 @@ function generateLegendSelText(legendProperties, point) {
     entity.setAttribute('width', legendProperties.width);
     entity.setAttribute('color', 'white');
     entity.setAttribute('text__title', {
-        'value': point['label'] + ': ' + point['y'],
+        'value': point['label'] + ': ' + value,
         'align': 'center',
         'width': '7',
         'color': point['color']
@@ -339,7 +354,7 @@ function generateSlice(point, theta_start, theta_length, radius) {
 function generateDoughnutSlice(point, position_start, arc, radius) {
     let entity = document.createElement('a-torus');
     entity.setAttribute('color', point['color']);
-    entity.setAttribute('rotation', {x: 0, y: 0, z: position_start});
+    entity.setAttribute('rotation', {x: 90, y: 0, z: position_start});
     entity.setAttribute('arc', arc);
     entity.setAttribute('side', 'double');
     entity.setAttribute('radius', radius);

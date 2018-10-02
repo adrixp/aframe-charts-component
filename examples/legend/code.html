@@ -52,8 +52,8 @@
         &lt;a-light type="point" intensity="1" position="-2 10 10"&gt;&lt;/a-light&gt;
 
         &lt;!-- Declaring chart component --&gt;
-        &lt;a-entity charts="type: pie; dataPoints: ../data/dataLegend.json; pie_radius: 3; show_legend_info: true;
-            show_legend_position: -2 5 7; show_legend_rotation: 0 35 0"&gt;&lt;/a-entity&gt;
+        &lt;a-entity charts="type: pie; dataPoints: ../data/dataLegend.json; pie_radius: 3; show_legend_info: true; show_legend_position: -2 5 7;
+            show_legend_rotation: 0 35 0" position="5 0 0"&gt;&lt;/a-entity&gt;
 
         &lt;!-- Aframe camera --&gt;
         &lt;a-entity position="2 10 14" rotation="-30 15 0"&gt;
@@ -72,11 +72,11 @@
 
         <pre><code class="json">
 [
-  {"y": 1, "color": "#ff0000", "label": "USA"},
-  {"y": 1, "color": "#00ff00", "label": "Spain"},
-  {"y": 2, "color": "#0000ff", "label": "Mexico"},
-  {"y": 1.5, "color": "#0000ff", "label": "Japan"},
-  {"y": 4, "color": "#4CC3D9", "label": "India"}
+  {"size": 1, "color": "#ff0000", "label": "USA"},
+  {"size": 1, "color": "#00ff00", "label": "Spain"},
+  {"size": 2, "color": "#0000ff", "label": "Mexico"},
+  {"size": 1.5, "color": "#0000ff", "label": "Japan"},
+  {"size": 4, "color": "#4CC3D9", "label": "India"}
 ]
         </code></pre>
 

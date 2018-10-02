@@ -1,7 +1,7 @@
 [
-  {"x": 1, "y": 1,   "z": 0, "color": "#ff0000", "label": "USA"},
-  {"x": 1, "y": 1,   "z": 7, "color": "#00ff00", "label": "Spain"},
-  {"x": 1, "y": 2,   "z": 3, "color": "#0000ff", "label": "Mexico"},
-  {"x": 1, "y": 1.5, "z": 1, "color": "#0000ff", "label": "Japan"},
-  {"x": 1, "y": 4,   "z": 4, "color": "#4CC3D9", "label": "India"}
+  {"size": 1,  "color": "#ff0000", "label": "USA"},
+  {"size": 1,  "color": "#00ff00", "label": "Spain"},
+  {"size": 2,  "color": "#0000ff", "label": "Mexico"},
+  {"size": 1.5,"color": "#0000ff", "label": "Japan"},
+  {"size": 4,  "color": "#4CC3D9", "label": "India"}
 ]
