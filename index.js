@@ -195,7 +195,7 @@ function getRotation (element){
 
 function generatePopUp(point, properties) {
     let correction = 0;
-    if(properties.type === "bar" || properties.type === "bar")
+    if(properties.type === "bar" || properties.type === "cylinder")
         correction = point['size']/2;
 
     let text = point['label'] + ': ' + point['y'];
@@ -204,8 +204,11 @@ function generatePopUp(point, properties) {
     if(text.length > 16)
         width = text.length/8;
 
+    console.log(point['y']);
+    console.log(point['size']*2);
+    console.log(point['y'] + point['size']*2);
     let entity = document.createElement('a-plane');
-    entity.setAttribute('position', {x: point['x'] + correction, y: point['y'] + point['size']*2 , z: point['z']});
+    entity.setAttribute('position', {x: point['x'] + correction, y: point['y'] + 3 , z: point['z']});
     entity.setAttribute('height', '2');
     entity.setAttribute('width', width);
     entity.setAttribute('color', 'white');
