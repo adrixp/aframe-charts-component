@@ -204,9 +204,6 @@ function generatePopUp(point, properties) {
     if(text.length > 16)
         width = text.length/8;
 
-    console.log(point['y']);
-    console.log(point['size']*2);
-    console.log(point['y'] + point['size']*2);
     let entity = document.createElement('a-plane');
     entity.setAttribute('position', {x: point['x'] + correction, y: point['y'] + 3 , z: point['z']});
     entity.setAttribute('height', '2');
@@ -230,6 +227,7 @@ function getLegendProperties(dataPoints, properties, element){
         height = (dataPoints.length - 1) / 3;
 
     let max_width_text = properties.show_legend_title.length;
+    console.log("max_width_text: " + max_width_text);
     for(let point of dataPoints){
         let point_text = point['label'] + ': ' + point['y'];
         if(point_text.length > max_width_text)
@@ -237,9 +235,10 @@ function getLegendProperties(dataPoints, properties, element){
     }
 
     let width = 2;
-    if(max_width_text > 16)
-        width = max_width_text.length/8;
+    if(max_width_text > 9)
+        width = max_width_text / 4.4;
 
+    console.log("width: " + width);
     let chart_position = getPostion(element);
     let position_tit =      {x: properties.show_legend_position.x - chart_position.x, y: properties.show_legend_position.y - chart_position.y + (height/2) + 0.5, z: properties.show_legend_position.z - chart_position.z};
     let position_sel_text = {x: properties.show_legend_position.x - chart_position.x, y: properties.show_legend_position.y - chart_position.y + (height/2),       z: properties.show_legend_position.z - chart_position.z};
@@ -268,6 +267,7 @@ function getLegendText(dataPoints, point) {
 }
 
 function generateLegendTitle(legendProperties) {
+    console.log("width title: " + legendProperties.width);
     let entity = document.createElement('a-plane');
     entity.setAttribute('position', legendProperties.position_tit);
     entity.setAttribute('rotation', legendProperties.rotation);
@@ -277,13 +277,14 @@ function generateLegendTitle(legendProperties) {
     entity.setAttribute('text__title', {
         'value': legendProperties.title,
         'align': 'center',
-        'width': 8,
+        'width': '8',
         'color': 'black'
     });
     return entity;
 }
 
 function generateLegendSelText(legendProperties, point) {
+    console.log("width seltex: " + legendProperties.width);
     let entity = document.createElement('a-plane');
     entity.setAttribute('position', legendProperties.position_sel_text);
     entity.setAttribute('rotation', legendProperties.rotation);
@@ -293,16 +294,17 @@ function generateLegendSelText(legendProperties, point) {
     entity.setAttribute('text__title', {
         'value': point['label'] + ': ' + point['y'],
         'align': 'center',
-        'width': 7,
+        'width': '7',
         'color': point['color']
     });
     entity.setAttribute('light', {
-        'intensity': 0.3
+        'intensity': '0.3'
     });
     return entity;
 }
 
 function generateLegendAllText(legendProperties, text) {
+    console.log("width alltext: " + legendProperties.width);
     let entity = document.createElement('a-plane');
     entity.setAttribute('position', legendProperties.position_all_text);
     entity.setAttribute('rotation', legendProperties.rotation);
@@ -312,11 +314,11 @@ function generateLegendAllText(legendProperties, text) {
     entity.setAttribute('text__title', {
         'value': text,
         'align': 'center',
-        'width': 6,
+        'width': '6',
         'color': 'black'
     });
     entity.setAttribute('light', {
-        'intensity': 0.3
+        'intensity': '0.3'
     });
     return entity;
 }
