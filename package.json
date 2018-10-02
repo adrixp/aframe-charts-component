@@ -1,6 +1,6 @@
 {
   "name": "aframe-charts-component",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Make 3D Charts with this component based on A-Frame.",
   "main": "index.js",
   "unpkg": "dist/aframe-charts-component.min.js",
@@ -26,7 +26,13 @@
     "aframe-vr",
     "vr",
     "webvr",
-    "charts"
+    "charts",
+    "3dcharts",
+    "3d-charts",
+    "vrcharts",
+    "plot",
+    "diagram",
+    "graph"
   ],
   "author": "Adrian Pizarro <adrianpizarroserrano@hotmail.com>",
   "license": "MIT",

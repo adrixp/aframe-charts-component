@@ -21,11 +21,16 @@ AFRAME.registerComponent('charts', {
         axis_negative:        {type: 'boolean', default: true},
         axis_grid:            {type: 'boolean', default: false},
         axis_grid_3D:         {type: 'boolean', default: false},
-        pie_radius:           {type: 'number', default: 1},
-        pie_doughnut:         {type: 'boolean', default: false},
         axis_text:            {type: 'boolean', default: true},
         axis_text_color:      {type: 'string', default: 'white'},
         axis_text_size:       {type: 'number', default: 10},
+        pie_radius:           {type: 'number', default: 1},
+        pie_doughnut:         {type: 'boolean', default: false},
+        show_popup_info:      {type: 'boolean', default: false},
+        show_legend_info:     {type: 'boolean', default: false},
+        show_legend_position: {type: 'vec3', default: {x:0, y:0, z:0}},
+        show_legend_rotation: {type: 'vec3', default: {x:0, y:0, z:0}},
+        show_legend_title:    {type: 'string', default: 'Legend'}
     },
 
     /**
@@ -85,24 +90,30 @@ AFRAME.registerComponent('charts', {
         }
 
         const properties = this.data;
+        let element = this.el;
 
-        //Axis generation
-        if(properties.axis_visible || properties.type !== "pie"){
-            if(properties.axis_length === 0){
-                let adaptive_props = getAdaptiveAxisProperties(dataPoints);
-                properties.axis_length = adaptive_props.max;
-                if(properties.axis_negative)
-                    properties.axis_negative = adaptive_props.has_negative;
-            }
+        startAxisGeneration(element, properties, dataPoints);
 
-            if(properties.axis_grid || properties.axis_grid_3D){
-                generateGridAxis(this.el, properties);
-            }else{
-                generateAxis(this.el, properties);
-            }
+        // Legend and pop Up
+        let popUp;
+        let show_popup_condition = properties.show_popup_info && properties.type !== "pie" && !properties.pie_doughnut;
+        let show_legend_condition = properties.show_legend_info;
+        let legend_title;
+        let legend_sel_text;
+        let legend_all_text;
+        let legend_properties;
+
+        if(show_legend_condition && dataPoints.length > 0){
+            legend_properties = getLegendProperties(dataPoints, properties, element);
+            legend_title = generateLegendTitle(legend_properties);
+            legend_sel_text = generateLegendSelText(legend_properties, dataPoints[0], properties);
+            legend_all_text = generateLegendAllText(legend_properties, getLegendText(dataPoints, dataPoints[0], properties));
+            element.appendChild(legend_title);
+            element.appendChild(legend_sel_text);
+            element.appendChild(legend_all_text);
         }
 
-        //Chart generation
+        // Properties for Pie Chart
         let pie_angle_start = 0;
         let pie_angle_end = 0;
         let pie_total_value = 0;
@@ -113,6 +124,7 @@ AFRAME.registerComponent('charts', {
             }
         }
 
+        //Chart generation
         for (let point of dataPoints) {
             let entity;
             if(properties.type === "bar"){
@@ -133,15 +145,201 @@ AFRAME.registerComponent('charts', {
 
             entity.addEventListener('mouseenter', function () {
                 this.setAttribute('scale', {x: 1.3, y: 1.3, z: 1.3});
-            });
-            entity.addEventListener('mouseleave', function () {
-                this.setAttribute('scale', {x: 1, y: 1, z: 1});
+                if(show_popup_condition){
+                    popUp = generatePopUp(point, properties);
+                    element.appendChild(popUp);
+                }
+                if(show_legend_condition){
+                    element.removeChild(legend_sel_text);
+                    element.removeChild(legend_all_text);
+                    legend_sel_text = generateLegendSelText(legend_properties, point, properties);
+                    legend_all_text = generateLegendAllText(legend_properties, getLegendText(dataPoints, point, properties));
+                    element.appendChild(legend_sel_text);
+                    element.appendChild(legend_all_text);
+                }
             });
 
-            this.el.appendChild(entity);
+            entity.addEventListener('mouseleave', function () {
+                this.setAttribute('scale', {x: 1, y: 1, z: 1});
+                if(show_popup_condition){
+                    element.removeChild(popUp);
+                }
+            });
+
+            element.appendChild(entity);
         }
     }
 });
+
+function getPosition (element){
+    let position = {x:0, y:0, z:0};
+
+    if(element.attributes.position != null){
+        let myPos = element.attributes.position.value.split(" ");
+        if(myPos[0] !== "" && myPos[0] != null)
+            position['x'] = myPos[0];
+        if(myPos[1] !== "" && myPos[1] != null)
+            position['y'] = myPos[1];
+        if(myPos[2] !== "" && myPos[2] != null)
+            position['z'] = myPos[2];
+    }
+    return position;
+}
+
+function getRotation (element){
+    let rotation = {x:0, y:0, z:0};
+    if(element.attributes.rotation != null ){
+        let myPos = element.attributes.rotation.value.split(" ");
+        if(myPos[0] !== "" && myPos[0] != null)
+            rotation['x'] = myPos[0];
+        if(myPos[1] !== "" && myPos[1] != null)
+            rotation['y'] = myPos[1];
+        if(myPos[2] !== "" && myPos[2] != null)
+            rotation['z'] = myPos[2];
+    }
+    return rotation;
+}
+
+function generatePopUp(point, properties) {
+    let correction = 0;
+    if(properties.type === "bar" || properties.type === "cylinder")
+        correction = point['size']/2;
+
+    let text = point['label'] + ': ' + point['y'];
+
+    let width = 2;
+    if(text.length > 16)
+        width = text.length/8;
+
+    let entity = document.createElement('a-plane');
+    entity.setAttribute('position', {x: point['x'] + correction, y: point['y'] + 3 , z: point['z']});
+    entity.setAttribute('height', '2');
+    entity.setAttribute('width', width);
+    entity.setAttribute('color', 'white');
+    entity.setAttribute('text', {
+        'value': 'DataPoint:\n\n' + text,
+        'align': 'center',
+        'width': 6,
+        'color': 'black'
+    });
+    entity.setAttribute('light', {
+        'intensity': 0.3
+    });
+    return entity;
+}
+
+function getLegendProperties(dataPoints, properties, element){
+    let height = 2;
+    if(dataPoints.length - 1 > 6)
+        height = (dataPoints.length - 1) / 3;
+
+    let max_width_text = properties.show_legend_title.length;
+    for(let point of dataPoints){
+        let point_text = point['label'] + ': ';
+        if(properties.type === 'pie'){
+            point_text += point['size'];
+        }else{
+            point_text += point['y'];
+        }
+        if(point_text.length > max_width_text)
+            max_width_text = point_text.length;
+    }
+
+    let width = 2;
+    if(max_width_text > 9)
+        width = max_width_text / 4.4;
+
+    let chart_position = getPosition(element);
+    let position_tit =      {x: properties.show_legend_position.x - chart_position.x, y: properties.show_legend_position.y - chart_position.y + (height/2) + 0.5, z: properties.show_legend_position.z - chart_position.z};
+    let position_sel_text = {x: properties.show_legend_position.x - chart_position.x, y: properties.show_legend_position.y - chart_position.y + (height/2),       z: properties.show_legend_position.z - chart_position.z};
+    let position_all_text = {x: properties.show_legend_position.x - chart_position.x, y: properties.show_legend_position.y - chart_position.y,                    z: properties.show_legend_position.z - chart_position.z};
+
+    let chart_rotation = getRotation(element);
+    let rotation = {x: properties.show_legend_rotation.x - chart_rotation.x, y: properties.show_legend_rotation.y - chart_rotation.y, z: properties.show_legend_rotation.z - chart_rotation.z};
+
+    return {height: height, width: width, title: properties.show_legend_title, rotation: rotation, position_tit: position_tit, position_sel_text: position_sel_text, position_all_text: position_all_text}
+}
+
+function getLegendText(dataPoints, point, properties) {
+    let text = "";
+
+    let auxDataPoints = dataPoints.slice();
+    let index = auxDataPoints.indexOf(point);
+    auxDataPoints.splice(index, 1);
+
+    for(let i = 0; i < auxDataPoints.length; i++){
+        if(properties.type === 'pie'){
+            text += auxDataPoints[i]['label'] + ': ' + auxDataPoints[i]['size'];
+        }else{
+            text += auxDataPoints[i]['label'] + ': ' + auxDataPoints[i]['y'];
+        }
+        if(i !== auxDataPoints.length -1 )
+            text += "\n";
+    }
+
+    return text;
+}
+
+function generateLegendTitle(legendProperties) {
+    let entity = document.createElement('a-plane');
+    entity.setAttribute('position', legendProperties.position_tit);
+    entity.setAttribute('rotation', legendProperties.rotation);
+    entity.setAttribute('height', '0.5');
+    entity.setAttribute('width', legendProperties.width);
+    entity.setAttribute('color', 'white');
+    entity.setAttribute('text__title', {
+        'value': legendProperties.title,
+        'align': 'center',
+        'width': '8',
+        'color': 'black'
+    });
+    return entity;
+}
+
+function generateLegendSelText(legendProperties, point, properties) {
+    let value = "";
+    if(properties.type === 'pie'){
+        value =  point['size'];
+    }else{
+        value =  point['y'];
+    }
+
+    let entity = document.createElement('a-plane');
+    entity.setAttribute('position', legendProperties.position_sel_text);
+    entity.setAttribute('rotation', legendProperties.rotation);
+    entity.setAttribute('height', '0.5');
+    entity.setAttribute('width', legendProperties.width);
+    entity.setAttribute('color', 'white');
+    entity.setAttribute('text__title', {
+        'value': point['label'] + ': ' + value,
+        'align': 'center',
+        'width': '7',
+        'color': point['color']
+    });
+    entity.setAttribute('light', {
+        'intensity': '0.3'
+    });
+    return entity;
+}
+
+function generateLegendAllText(legendProperties, text) {
+    let entity = document.createElement('a-plane');
+    entity.setAttribute('position', legendProperties.position_all_text);
+    entity.setAttribute('rotation', legendProperties.rotation);
+    entity.setAttribute('height', legendProperties.height);
+    entity.setAttribute('width', legendProperties.width);
+    entity.setAttribute('color', 'white');
+    entity.setAttribute('text__title', {
+        'value': text,
+        'align': 'center',
+        'width': '6',
+        'color': 'black'
+    });
+    entity.setAttribute('light', {
+        'intensity': '0.3'
+    });
+    return entity;
+}
 
 function generateSlice(point, theta_start, theta_length, radius) {
     let entity = document.createElement('a-cylinder');
@@ -156,7 +354,7 @@ function generateSlice(point, theta_start, theta_length, radius) {
 function generateDoughnutSlice(point, position_start, arc, radius) {
     let entity = document.createElement('a-torus');
     entity.setAttribute('color', point['color']);
-    entity.setAttribute('rotation', {x: 0, y: 0, z: position_start});
+    entity.setAttribute('rotation', {x: 90, y: 0, z: position_start});
     entity.setAttribute('arc', arc);
     entity.setAttribute('side', 'double');
     entity.setAttribute('radius', radius);
@@ -191,6 +389,23 @@ function generateCylinder(point) {
     return entity;
 }
 
+function startAxisGeneration(element, properties, dataPoints) {
+
+    if(properties.axis_visible && properties.type !== "pie"){
+        if(properties.axis_length === 0){
+            let adaptive_props = getAdaptiveAxisProperties(dataPoints);
+            properties.axis_length = adaptive_props.max;
+            if(properties.axis_negative)
+                properties.axis_negative = adaptive_props.has_negative;
+        }
+
+        if(properties.axis_grid || properties.axis_grid_3D){
+            generateGridAxis(element, properties);
+        }else{
+            generateAxis(element, properties);
+        }
+    }
+}
 
 function generateAxis(element, properties) {
     let axis_length = properties.axis_length;
