@@ -171,24 +171,31 @@ AFRAME.registerComponent('charts', {
     }
 });
 
-function getPostion (element){
+function getPosition (element){
     let position = {x:0, y:0, z:0};
+
     if(element.attributes.position != null){
         let myPos = element.attributes.position.value.split(" ");
-        position['x'] = myPos[0];
-        position['y'] = myPos[1];
-        position['z'] = myPos[2];
+        if(myPos[0] !== "" && myPos[0] != null)
+            position['x'] = myPos[0];
+        if(myPos[1] !== "" && myPos[1] != null)
+            position['y'] = myPos[1];
+        if(myPos[2] !== "" && myPos[2] != null)
+            position['z'] = myPos[2];
     }
     return position;
 }
 
 function getRotation (element){
     let rotation = {x:0, y:0, z:0};
-    if(element.attributes.rotation != null){
+    if(element.attributes.rotation != null ){
         let myPos = element.attributes.rotation.value.split(" ");
-        rotation['x'] = myPos[0];
-        rotation['y'] = myPos[1];
-        rotation['z'] = myPos[2];
+        if(myPos[0] !== "" && myPos[0] != null)
+            rotation['x'] = myPos[0];
+        if(myPos[1] !== "" && myPos[1] != null)
+            rotation['y'] = myPos[1];
+        if(myPos[2] !== "" && myPos[2] != null)
+            rotation['z'] = myPos[2];
     }
     return rotation;
 }
@@ -227,7 +234,6 @@ function getLegendProperties(dataPoints, properties, element){
         height = (dataPoints.length - 1) / 3;
 
     let max_width_text = properties.show_legend_title.length;
-    console.log("max_width_text: " + max_width_text);
     for(let point of dataPoints){
         let point_text = point['label'] + ': ' + point['y'];
         if(point_text.length > max_width_text)
@@ -238,13 +244,13 @@ function getLegendProperties(dataPoints, properties, element){
     if(max_width_text > 9)
         width = max_width_text / 4.4;
 
-    console.log("width: " + width);
-    let chart_position = getPostion(element);
+    let chart_position = getPosition(element);
     let position_tit =      {x: properties.show_legend_position.x - chart_position.x, y: properties.show_legend_position.y - chart_position.y + (height/2) + 0.5, z: properties.show_legend_position.z - chart_position.z};
     let position_sel_text = {x: properties.show_legend_position.x - chart_position.x, y: properties.show_legend_position.y - chart_position.y + (height/2),       z: properties.show_legend_position.z - chart_position.z};
     let position_all_text = {x: properties.show_legend_position.x - chart_position.x, y: properties.show_legend_position.y - chart_position.y,                    z: properties.show_legend_position.z - chart_position.z};
 
     let chart_rotation = getRotation(element);
+    console.log(chart_rotation);
     let rotation = {x: properties.show_legend_rotation.x - chart_rotation.x, y: properties.show_legend_rotation.y - chart_rotation.y, z: properties.show_legend_rotation.z - chart_rotation.z};
 
     return {height: height, width: width, title: properties.show_legend_title, rotation: rotation, position_tit: position_tit, position_sel_text: position_sel_text, position_all_text: position_all_text}
@@ -267,7 +273,6 @@ function getLegendText(dataPoints, point) {
 }
 
 function generateLegendTitle(legendProperties) {
-    console.log("width title: " + legendProperties.width);
     let entity = document.createElement('a-plane');
     entity.setAttribute('position', legendProperties.position_tit);
     entity.setAttribute('rotation', legendProperties.rotation);
@@ -284,7 +289,6 @@ function generateLegendTitle(legendProperties) {
 }
 
 function generateLegendSelText(legendProperties, point) {
-    console.log("width seltex: " + legendProperties.width);
     let entity = document.createElement('a-plane');
     entity.setAttribute('position', legendProperties.position_sel_text);
     entity.setAttribute('rotation', legendProperties.rotation);
@@ -304,7 +308,6 @@ function generateLegendSelText(legendProperties, point) {
 }
 
 function generateLegendAllText(legendProperties, text) {
-    console.log("width alltext: " + legendProperties.width);
     let entity = document.createElement('a-plane');
     entity.setAttribute('position', legendProperties.position_all_text);
     entity.setAttribute('rotation', legendProperties.rotation);
