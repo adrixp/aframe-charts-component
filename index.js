@@ -1,4 +1,5 @@
 /* global AFRAME */
+var elasticData = require('./search.js');
 
 if (typeof AFRAME === 'undefined') {
     throw new Error('Component attempted to register before AFRAME was available.');
@@ -11,6 +12,7 @@ AFRAME.registerComponent('charts', {
     schema: {
         type:                 {type: 'string', default: 'bubble'},
         dataPoints:           {type: 'asset'},
+        elasticSearch_url:    {type: 'string', default: ''},
         axis_visible:         {type: 'boolean', default: true},
         axis_position:        {type: 'vec3', default: {x:0, y:0, z:0}},
         axis_color:           {type: 'string', default: 'red'},
@@ -52,6 +54,11 @@ AFRAME.registerComponent('charts', {
 
     update: function (oldData) {
         const data = this.data;
+
+        if(data.elasticSearch_url != ''){
+            console.log(elasticData);
+        }
+
 
         if (data.dataPoints){
             this.loader.load(data.dataPoints, this.onDataLoaded.bind(this));

@@ -23,7 +23,7 @@
         <a-scene background="color: grey">
             <a-light type="point" intensity="1" position="-2 10 10"></a-light>
 
-            <a-entity charts="type: bar;      dataPoints: ../data/dataPositive.json" position="-50 0 10" rotation="0 30 -10"></a-entity>
+            <a-entity charts="type: bar; elasticSearch_url: true;    dataPoints: ../data/dataPositive.json" position="-50 0 10" rotation="0 30 -10"></a-entity>
             <a-entity charts="type: bubble;   dataPoints: ../data/dataPositive.json" position="-25 15 0" rotation="0 20 -10"></a-entity>
             <a-entity charts="type: pie;      dataPoints: ../data/dataPositive.json; pie_radius: 5" position="-5 0 -20"></a-entity>
             <a-entity charts="type: cylinder; dataPoints: ../data/dataPositive.json" position="12 17 -5" rotation="0 -20 10"></a-entity>
