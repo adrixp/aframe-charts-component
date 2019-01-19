@@ -65,9 +65,7 @@
     "shx": "^0.1.1",
     "snazzy": "^4.0.0",
     "uglify-es": "github:mishoo/UglifyJS2#harmony",
-    "webpack": "^2.7.0",
-    "elasticsearch": "^15.1.1",
-    "get-json": "^1.0.1"
+    "webpack": "^2.7.0"
   },
   "semistandard": {
     "globals": [
