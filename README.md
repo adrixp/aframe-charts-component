@@ -11,7 +11,7 @@ Make 3D Charts with this component based on [A-Frame](https://aframe.io).
 
 | Property | Description | Default Value |
 | -------- | ----------- | ------------- |
-| type         | Chart type. Currently we have bubble, pie, doughnut, bar and cylinder charts            |  bubble             |
+| type         | Chart type. Currently we have bubble, pie, doughnut, bar, totem and cylinder charts. <br /><br />*Totem: is used to change dynamically data charts           |  bubble             |
 | dataPoints | Path to JSON input data |  ../data/data.json  |          |
 | axis_position         | Set the axis position            |  {x:0, y:0, z:0}           |
 | axis_visible         | If false, axis will be hidden            |  true             |
@@ -33,6 +33,8 @@ Make 3D Charts with this component based on [A-Frame](https://aframe.io).
 | show_legend_position         | Set the legend position. Only works if show legend info property is true           |  {x:0, y:0, z:0}            |
 | show_legend_rotation         | Set the legend rotation. Only works if show legend info property is true           |  {x:0, y:0, z:0}            |
 | show_legend_title         | Title appearing in legend           |  Legend            |
+| entity_id_list          | Comma separated list of a-entity ID. Only used in totem chart type           |  ''           |
+| dataPoints_list         | Comma separated list of different URL dataPoint. Only used in totem chart type           |  ''            |
 
 ### JSON File
 We need this file which contains the points in order to generate the chart. The path of this file must be included in dataPoint property.

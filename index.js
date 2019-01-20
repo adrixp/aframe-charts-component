@@ -29,7 +29,9 @@ AFRAME.registerComponent('charts', {
         show_legend_info:     {type: 'boolean', default: false},
         show_legend_position: {type: 'vec3', default: {x:0, y:0, z:0}},
         show_legend_rotation: {type: 'vec3', default: {x:0, y:0, z:0}},
-        show_legend_title:    {type: 'string', default: 'Legend'}
+        show_legend_title:    {type: 'string', default: 'Legend'},
+        entity_id_list:       {type: 'string', default: ''},
+        dataPoints_list:      {type: 'string', default: ''}
     },
 
     /**
@@ -49,14 +51,15 @@ AFRAME.registerComponent('charts', {
     * Generally modifies the entity based on the data.
     */
 
-    update: function (oldData) {
+    update: function (newData) {
         const data = this.data;
-
-        console.log("data: " + data.dataPoints);
-        console.log("oldData: " + oldData.dataPoints);
-
-        if (data.dataPoints && data.dataPoints !== oldData.dataPoints){
+        console.log(data);
+        if (newData!= null && newData.dataPoints){
+            this.loader.load(newData.dataPoints, this.onDataLoaded.bind(this));
+        }else if(data.dataPoints){
             this.loader.load(data.dataPoints, this.onDataLoaded.bind(this));
+        }else if(data.type === "totem"){
+            generateTotem(data, this.el);
         }
     },
     /**
@@ -388,6 +391,68 @@ function generateCylinder(point) {
     entity.setAttribute('height', point['y']);
     entity.setAttribute('radius', point['size'] / 2 );
     return entity;
+}
+
+let removeAllChildren = function(element, children){
+    children.forEach(function(child) {
+        element.el.removeChild(child);
+    });
+};
+
+function generateTotemSlice(properties, entity_id_list, dataPoints_path) {
+    let entity = document.createElement('a-plane');
+    entity.setAttribute('position', properties.position);
+    entity.setAttribute('height', '0.5');
+    entity.setAttribute('width', properties.width);
+    entity.setAttribute('color', 'white');
+    entity.setAttribute('text__title', {
+        'value': properties.name,
+        'align': 'center',
+        'width': '8',
+        'color': 'black'
+    });
+    entity.addEventListener('click', function () {
+        let entity_list = entity_id_list.split(',');
+        for(let id of entity_list){
+            let el = document.querySelector('#' + id).components.charts;
+            removeAllChildren(el, el.el.getChildEntities());
+            el.update({dataPoints: dataPoints_path});
+        }
+    });
+    return entity;
+}
+
+function getTotemWidth(dataPoints_list) {
+    let max_width = 0;
+    for(let dataPoints of dataPoints_list){
+        let name = dataPoints.split('/')[dataPoints.split('/').length - 1];
+        if(name.length > max_width)
+            max_width = name.length;
+    }
+
+    let width = 2;
+    if(max_width > 9)
+        width = max_width / 4.4;
+    return width;
+}
+
+function generateTotem(properties, element) {
+    if(properties.dataPoints_list === '')
+        return;
+
+    let dataPoints_list = properties.dataPoints_list.split(',');
+    let position = getPosition(element);
+    let width = getTotemWidth(dataPoints_list);
+    let offset = 0.5;
+    for(let dataPoints of dataPoints_list){
+        let dataProperties = {};
+        dataProperties['position'] = {x: position.x, y: parseInt(position.y) - offset, z: position.z};
+        dataProperties['name'] = dataPoints.split('/')[dataPoints.split('/').length - 1];
+        dataProperties['width'] = width;
+        element.appendChild(generateTotemSlice(dataProperties, properties.entity_id_list, dataPoints));
+        offset++;
+    }
+
 }
 
 function startAxisGeneration(element, properties, dataPoints) {
