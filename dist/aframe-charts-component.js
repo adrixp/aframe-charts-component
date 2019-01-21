@@ -125,7 +125,6 @@ AFRAME.registerComponent('charts', {
 
     update: function (newData) {
         const data = this.data;
-        console.log(data);
         if (newData!= null && newData.dataPoints){
             this.loader.load(newData.dataPoints, this.onDataLoaded.bind(this));
         }else if(data.dataPoints){
@@ -474,6 +473,7 @@ let removeAllChildren = function(element, children){
 function generateTotemTitle(width, position) {
     let entity = document.createElement('a-plane');
     entity.setAttribute('position', position);
+    entity.setAttribute('scale', {x:1, y:1, z:0.01});
     entity.setAttribute('height', '0.5');
     entity.setAttribute('color', 'blue');
     entity.setAttribute('width', width);
@@ -489,6 +489,7 @@ function generateTotemTitle(width, position) {
 function generateTotemSlice(properties, entity_id_list, dataPoints_path) {
     let entity = document.createElement('a-plane');
     entity.setAttribute('position', properties.position);
+    entity.setAttribute('scale', {x:1, y:1, z:0.01});
     entity.setAttribute('height', '0.5');
     entity.setAttribute('width', properties.width);
     entity.setAttribute('text__title', {
@@ -497,7 +498,9 @@ function generateTotemSlice(properties, entity_id_list, dataPoints_path) {
         'width': '8',
         'color': 'black'
     });
+
     entity.addEventListener('click', function () {
+        console.log(dataPoints_path);
         let entity_list = entity_id_list.split(',');
         for(let id of entity_list){
             let el = document.querySelector('#' + id).components.charts;
