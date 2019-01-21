@@ -225,14 +225,14 @@ AFRAME.registerComponent('charts', {
                     popUp = generatePopUp(point, properties);
                     element.appendChild(popUp);
                 }
-                if(show_legend_condition){
-                    element.removeChild(legend_sel_text);
-                    element.removeChild(legend_all_text);
-                    legend_sel_text = generateLegendSelText(legend_properties, point, properties);
-                    legend_all_text = generateLegendAllText(legend_properties, getLegendText(dataPoints, point, properties));
-                    element.appendChild(legend_sel_text);
-                    element.appendChild(legend_all_text);
-                }
+                if(!show_legend_condition)
+                    return;
+                element.removeChild(legend_sel_text);
+                element.removeChild(legend_all_text);
+                legend_sel_text = generateLegendSelText(legend_properties, point, properties);
+                legend_all_text = generateLegendAllText(legend_properties, getLegendText(dataPoints, point, properties));
+                element.appendChild(legend_sel_text);
+                element.appendChild(legend_all_text);
             });
 
             entity.addEventListener('mouseleave', function () {
@@ -249,30 +249,30 @@ AFRAME.registerComponent('charts', {
 
 function getPosition (element){
     let position = {x:0, y:0, z:0};
+    if(element.attributes.position == null)
+        return position;
 
-    if(element.attributes.position != null){
-        let myPos = element.attributes.position.value.split(" ");
-        if(myPos[0] !== "" && myPos[0] != null)
-            position['x'] = myPos[0];
-        if(myPos[1] !== "" && myPos[1] != null)
-            position['y'] = myPos[1];
-        if(myPos[2] !== "" && myPos[2] != null)
-            position['z'] = myPos[2];
-    }
+    let myPos = element.attributes.position.value.split(" ");
+    if(myPos[0] !== "" && myPos[0] != null)
+        position['x'] = myPos[0];
+    if(myPos[1] !== "" && myPos[1] != null)
+        position['y'] = myPos[1];
+    if(myPos[2] !== "" && myPos[2] != null)
+        position['z'] = myPos[2];
     return position;
 }
 
 function getRotation (element){
     let rotation = {x:0, y:0, z:0};
-    if(element.attributes.rotation != null ){
-        let myPos = element.attributes.rotation.value.split(" ");
-        if(myPos[0] !== "" && myPos[0] != null)
-            rotation['x'] = myPos[0];
-        if(myPos[1] !== "" && myPos[1] != null)
-            rotation['y'] = myPos[1];
-        if(myPos[2] !== "" && myPos[2] != null)
-            rotation['z'] = myPos[2];
-    }
+    if(element.attributes.rotation == null )
+        return rotation;
+    let myPos = element.attributes.rotation.value.split(" ");
+    if(myPos[0] !== "" && myPos[0] != null)
+        rotation['x'] = myPos[0];
+    if(myPos[1] !== "" && myPos[1] != null)
+        rotation['y'] = myPos[1];
+    if(myPos[2] !== "" && myPos[2] != null)
+        rotation['z'] = myPos[2];
     return rotation;
 }
 
@@ -471,12 +471,26 @@ let removeAllChildren = function(element, children){
     });
 };
 
+function generateTotemTitle(width, position) {
+    let entity = document.createElement('a-plane');
+    entity.setAttribute('position', position);
+    entity.setAttribute('height', '0.5');
+    entity.setAttribute('color', 'blue');
+    entity.setAttribute('width', width);
+    entity.setAttribute('text__title', {
+        'value': 'Select dataSource:',
+        'align': 'center',
+        'width': '9',
+        'color': 'white'
+    });
+    return entity;
+}
+
 function generateTotemSlice(properties, entity_id_list, dataPoints_path) {
     let entity = document.createElement('a-plane');
     entity.setAttribute('position', properties.position);
     entity.setAttribute('height', '0.5');
     entity.setAttribute('width', properties.width);
-    entity.setAttribute('color', 'white');
     entity.setAttribute('text__title', {
         'value': properties.name,
         'align': 'center',
@@ -515,33 +529,34 @@ function generateTotem(properties, element) {
     let dataPoints_list = properties.dataPoints_list.split(',');
     let position = getPosition(element);
     let width = getTotemWidth(dataPoints_list);
-    let offset = 0.5;
+    element.appendChild(generateTotemTitle(width, position));
+    let offset = 0.75;
     for(let dataPoints of dataPoints_list){
         let dataProperties = {};
         dataProperties['position'] = {x: position.x, y: parseInt(position.y) - offset, z: position.z};
         dataProperties['name'] = dataPoints.split('/')[dataPoints.split('/').length - 1];
         dataProperties['width'] = width;
         element.appendChild(generateTotemSlice(dataProperties, properties.entity_id_list, dataPoints));
-        offset++;
+        offset += 0.65;
     }
 
 }
 
 function startAxisGeneration(element, properties, dataPoints) {
+    if(!properties.axis_visible || properties.type === "pie")
+        return;
 
-    if(properties.axis_visible && properties.type !== "pie"){
-        if(properties.axis_length === 0){
-            let adaptive_props = getAdaptiveAxisProperties(dataPoints);
-            properties.axis_length = adaptive_props.max;
-            if(properties.axis_negative)
-                properties.axis_negative = adaptive_props.has_negative;
-        }
+    if(properties.axis_length === 0){
+        let adaptive_props = getAdaptiveAxisProperties(dataPoints);
+        properties.axis_length = adaptive_props.max;
+        if(properties.axis_negative)
+            properties.axis_negative = adaptive_props.has_negative;
+    }
 
-        if(properties.axis_grid || properties.axis_grid_3D){
-            generateGridAxis(element, properties);
-        }else{
-            generateAxis(element, properties);
-        }
+    if(properties.axis_grid || properties.axis_grid_3D){
+        generateGridAxis(element, properties);
+    }else{
+        generateAxis(element, properties);
     }
 }
 
@@ -574,7 +589,7 @@ function generateAxis(element, properties) {
         }
 
         let axis_line = document.createElement('a-entity');
-        axis_line.setAttribute('line', {
+        axis_line.setAttribute('line__' + axis, {
             'start': line_start,
             'end':   line_end,
             'color': axis_color
@@ -666,7 +681,7 @@ function generateGridAxis(element, properties) {
         }
 
         let axis_line = document.createElement('a-entity');
-        axis_line.setAttribute('line', {
+        axis_line.setAttribute('line__' + axis, {
             'start': line_start,
             'end':   line_end,
             'color': axis_color
@@ -737,29 +752,30 @@ function generateGridAxis(element, properties) {
                 'color': axis_color
             });
 
-            if(axis_grid_3D){
-                for (let grid = 1 - axis_negative_offset; grid <= axis_length; grid ++) {
-                    let sub_grid_start;
-                    let sub_grid_end;
+            if(!axis_grid_3D)
+                continue;
+            for (let grid = 1 - axis_negative_offset; grid <= axis_length; grid ++) {
+                let sub_grid_start;
+                let sub_grid_end;
 
-                    if (axis === 'x') {
-                        sub_grid_start = {x: axis_position.x + tick,                  y: axis_position.y - axis_negative_offset,  z: axis_position.z + grid};
-                        sub_grid_end   = {x: axis_position.x + tick,                  y: axis_position.y + axis_length,           z: axis_position.z + grid};
-                    }else if (axis === 'y') {
-                        sub_grid_start = {x: axis_position.x + grid,                  y: axis_position.y + tick,                  z: axis_position.z - axis_negative_offset};
-                        sub_grid_end   = {x: axis_position.x + grid,                  y: axis_position.y + tick,                  z: axis_position.z + axis_length};
-                    }else{
-                        sub_grid_start = {x: axis_position.x - axis_negative_offset,  y: axis_position.y + grid,                  z: axis_position.z + tick};
-                        sub_grid_end   = {x: axis_position.x + axis_length,           y: axis_position.y + grid,                  z: axis_position.z + tick};
-                    }
-
-                    axis_line.setAttribute('line__' + tick + grid + axis_length, {
-                        'start': sub_grid_start,
-                        'end':   sub_grid_end,
-                        'color': axis_color
-                    });
+                if (axis === 'x') {
+                    sub_grid_start = {x: axis_position.x + tick,                  y: axis_position.y - axis_negative_offset,  z: axis_position.z + grid};
+                    sub_grid_end   = {x: axis_position.x + tick,                  y: axis_position.y + axis_length,           z: axis_position.z + grid};
+                }else if (axis === 'y') {
+                    sub_grid_start = {x: axis_position.x + grid,                  y: axis_position.y + tick,                  z: axis_position.z - axis_negative_offset};
+                    sub_grid_end   = {x: axis_position.x + grid,                  y: axis_position.y + tick,                  z: axis_position.z + axis_length};
+                }else{
+                    sub_grid_start = {x: axis_position.x - axis_negative_offset,  y: axis_position.y + grid,                  z: axis_position.z + tick};
+                    sub_grid_end   = {x: axis_position.x + axis_length,           y: axis_position.y + grid,                  z: axis_position.z + tick};
                 }
+
+                axis_line.setAttribute('line__' + tick + grid + axis_length, {
+                    'start': sub_grid_start,
+                    'end':   sub_grid_end,
+                    'color': axis_color
+                });
             }
+
 
         }
         element.appendChild(axis_line);
