@@ -1,6 +1,6 @@
 {
   "name": "aframe-charts-component",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Make 3D Charts with this component based on A-Frame.",
   "main": "index.js",
   "unpkg": "dist/aframe-charts-component.min.js",
