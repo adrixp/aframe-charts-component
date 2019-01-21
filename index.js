@@ -53,7 +53,6 @@ AFRAME.registerComponent('charts', {
 
     update: function (newData) {
         const data = this.data;
-        console.log(data);
         if (newData!= null && newData.dataPoints){
             this.loader.load(newData.dataPoints, this.onDataLoaded.bind(this));
         }else if(data.dataPoints){
