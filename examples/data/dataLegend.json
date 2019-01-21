@@ -2,6 +2,6 @@
   {"size": 1,  "color": "#ff0000", "label": "USA"},
   {"size": 1,  "color": "#00ff00", "label": "Spain"},
   {"size": 2,  "color": "#0000ff", "label": "Mexico"},
-  {"size": 1.5,"color": "#0000ff", "label": "Japan"},
+  {"size": 1.5,"color": "#000000", "label": "Japan"},
   {"size": 4,  "color": "#4CC3D9", "label": "India"}
 ]
