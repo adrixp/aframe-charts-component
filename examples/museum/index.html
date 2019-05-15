@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>A-Frame A-Charts Component - Pie</title>
         <meta name="description" content="Pie example for A-Charts component."/>
-        <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+        <script src="https://rawgit.com/aframevr/aframe/cf15c15/dist/aframe-master.min.js"></script>
         <script src="../../dist/aframe-charts-component.min.js"></script>
         <style>
             .home{
@@ -20,7 +20,7 @@
     <body>
 
         <a class="home" href="../../">Home</a>
-        <a-scene background="color: grey">
+        <a-scene background="color: grey" cursor="rayOrigin:mouse">
             <a-light type="point" intensity="1" position="-2 10 10"></a-light>
 
             <a-entity id="barId"            charts="type: bar;      dataPoints: ../data/dataPositive.json" position="-50 0 10" rotation="0 30 -10"></a-entity>
@@ -29,15 +29,15 @@
             <a-entity id="cylinderId"       charts="type: cylinder; dataPoints: ../data/dataPositive.json" position="12 17 -5" rotation="0 -20 10"></a-entity>
             <a-entity id="pieDoughnutId"    charts="type: pie;      dataPoints: ../data/dataPositive.json; pie_radius: 5; pie_doughnut: true" position="35 0 -10"></a-entity>
 
-            <a-light type="point" intensity="0.7" position="1 30 25"></a-light>
+            <a-light type="point" intensity="0.7" position="1 30 30"></a-light>
             <a-entity charts="type: totem;  entity_id_list: barId,bubbleId,pieId,cylinderId,pieDoughnutId;
                 dataPoints_list: ../data/dataPositive.json,../data/data.json,../data/dataSmall.json" position="1 15 10"></a-entity>
 
 
-            <a-entity position="0 30 30" rotation="-30 15 0">
+            <a-entity movement-controls="fly: true" position="0 30 30" rotation="-24 15 0">
                 <a-camera position="3 -1 4" rotation="0 -1 0">
-                    <a-cursor></a-cursor>
                 </a-camera>
+                <a-entity laser-controls="hand: right"></a-entity>
             </a-entity>
         </a-scene>
 
