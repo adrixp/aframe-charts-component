@@ -115,13 +115,14 @@
             </li>
 
             <li>
-                <a class="landscape" href="examples/museum/" style="background-image: url(img/museum.png)"></a>
-                <h3>Dynamic Museum</h3>
-                <p>This is the museum of the library.</p>
-                <p>We could see all the charts changing data dynamically</p>
-                <pre><code class="html">&lt;a-entity charts="type: totem;  entity_id_list: ; dataPoints_list: "&gt;
+                <a class="landscape" href="examples/totem/" style="background-image: url(img/totem.gif)"></a>
+                <h3>Totem</h3>
+                <p>This is the totem example.</p>
+                <p>We can use it in order to change data dynamically</p>
+                <pre><code class="html">&lt;a-entity  position="1 15 10" charts="type: totem;  entity_id_list: barId;
+    dataPoints_list: ../data/dataPositive.json,../data/data.json,../data/dataSmall.json"&gt;
 &lt;/a-entity&gt;</code></pre>
-                <a class="link" href="examples/museum/code.html">Full detailed Code</a>
+                <a class="link" href="examples/totem/code.html">Full detailed Code</a>
             </li>
         </ul>
 
@@ -141,6 +142,14 @@
                     <br>
                     <a class="link" href="examples/axis/code.html">Full detailed Code</a>
                 </div>
+            </li>
+            <li>
+                <a class="landscape" href="examples/museum/" style="background-image: url(img/museum.png)"></a>
+                <h3>Dynamic Museum</h3>
+                <p>This is the museum of the library.</p>
+                <p>We could see all the charts changing data dynamically</p>
+                <p>Adapted for VR devices such as Oculus, etc</p>
+                <a class="link" href="examples/museum/code.html">Example Code</a>
             </li>
             <li>
                 <a class="portrait" href="examples/popup/" style="background-image: url(img/popUp.gif)"></a>

@@ -2,8 +2,8 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>A-Frame A-Charts Component - Museum</title>
-        <meta name="description" content="Museum example for A-Charts component."/>
+        <title>A-Frame A-Charts Component - Totem</title>
+        <meta name="description" content="Totem example for A-Charts component."/>
         <script src="https://rawgit.com/aframevr/aframe/cf15c15/dist/aframe-master.min.js"></script>
         <script src="../../dist/aframe-charts-component.min.js"></script>
         <style>
@@ -23,21 +23,16 @@
         <a-scene background="color: grey" cursor="rayOrigin:mouse"> <!-- Cursor mouse clickable. -->
             <a-light type="point" intensity="1" position="-2 10 10"></a-light>
 
-            <a-entity id="barId"            charts="type: bar;      dataPoints: ../data/dataPositive.json" position="-50 0 10" rotation="0 30 -10"></a-entity>
-            <a-entity id="bubbleId"         charts="type: bubble;   dataPoints: ../data/dataPositive.json" position="-25 15 0" rotation="0 20 -10"></a-entity>
-            <a-entity id="pieId"            charts="type: pie;      dataPoints: ../data/dataPositive.json; pie_radius: 5" position="-5 0 -20"></a-entity>
-            <a-entity id="cylinderId"       charts="type: cylinder; dataPoints: ../data/dataPositive.json" position="12 17 -5" rotation="0 -20 10"></a-entity>
-            <a-entity id="pieDoughnutId"    charts="type: pie;      dataPoints: ../data/dataPositive.json; pie_radius: 5; pie_doughnut: true" position="35 0 -10"></a-entity>
+            <a-entity id="barId"            charts="type: bar;      dataPoints: ../data/dataPositive.json" position="-20 22 14" rotation="0 30 -10"></a-entity>
 
             <a-light type="point" intensity="0.7" position="1 30 30"></a-light>
-            <a-entity charts="type: totem;  entity_id_list: barId,bubbleId,pieId,cylinderId,pieDoughnutId;
+            <a-entity charts="type: totem;  entity_id_list: barId;
                 dataPoints_list: ../data/dataPositive.json,../data/data.json,../data/dataSmall.json" position="1 15 10"></a-entity>
 
 
-            <a-entity movement-controls="fly: true" position="0 30 30" rotation="-24 15 0"> <!-- Camera fly movement. -->
+            <a-entity movement-controls="fly: true" position="0 30 30" rotation="-24 15 0">
                 <a-camera position="4.2 -1 1.5" rotation="0 -1 0">
                 </a-camera>
-                <a-entity laser-controls="hand: right"></a-entity> <!-- Control for Oculus Rift. -->
             </a-entity>
         </a-scene>
 

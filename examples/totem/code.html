@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>A-Frame A-Charts Component - Museum</title>
+        <title>A-Frame A-Charts Component - Totem</title>
         <meta name="description" content="Code example for A-Charts component."/>
         <link rel="stylesheet" href="../lib/highlight/dracula.css">
         <script src="../lib/highlight/highlight.pack.js"></script>
@@ -37,8 +37,8 @@
     <body>
 
         <a class="home" href="../../">Home</a>
-        <h1>Dynamic Museum Code</h1>
-        <p>You only need this lines in order to see the museum.</p>
+        <h1>Totem Code</h1>
+        <p>You only need this lines in order to see the totem.</p>
 
         <pre><code class="html">&lt;head&gt;
     &lt;title&gt;My A-Frame Scene&lt;/title&gt;
@@ -48,29 +48,28 @@
 &lt;body&gt;
     &lt;!-- Aframe scene --&gt;
     &lt;a-scene background="color: grey" cursor="rayOrigin:mouse"&gt; &lt;!-- Cursor mouse clickable. --&gt;
-      &lt;a-light type="point" intensity="1" position="-2 10 10"&gt;&lt;/a-light&gt;
+        &lt;a-light type="point" intensity="1" position="-2 10 10"&gt;&lt;/a-light&gt;
 
-      &lt;a-entity id="barId"            charts="type: bar;      dataPoints: ../data/dataPositive.json" position="-50 0 10" rotation="0 30 -10"&gt;&lt;/a-entity&gt;
-      &lt;a-entity id="bubbleId"         charts="type: bubble;   dataPoints: ../data/dataPositive.json" position="-25 15 0" rotation="0 20 -10"&gt;&lt;/a-entity&gt;
-      &lt;a-entity id="pieId"            charts="type: pie;      dataPoints: ../data/dataPositive.json; pie_radius: 5" position="-5 0 -20"&gt;&lt;/a-entity&gt;
-      &lt;a-entity id="cylinderId"       charts="type: cylinder; dataPoints: ../data/dataPositive.json" position="12 17 -5" rotation="0 -20 10"&gt;&lt;/a-entity&gt;
-      &lt;a-entity id="pieDoughnutId"    charts="type: pie;      dataPoints: ../data/dataPositive.json; pie_radius: 5; pie_doughnut: true" position="35 0 -10"&gt;&lt;/a-entity&gt;
+        &lt;a-entity id="barId"            charts="type: bar;      dataPoints: ../data/dataPositive.json" position="-20 22 14" rotation="0 30 -10"&gt;&lt;/a-entity&gt;
 
-      &lt;a-light type="point" intensity="0.7" position="1 30 30"&gt;&lt;/a-light&gt;
+        &lt;a-light type="point" intensity="0.7" position="1 30 30"&gt;&lt;/a-light&gt;
 
-      &lt;a-entity charts="type: totem;  entity_id_list: barId,bubbleId,pieId,cylinderId,pieDoughnutId;
-      dataPoints_list: ../data/dataPositive.json,../data/data.json,../data/dataSmall.json" position="1 15 10"&gt;&lt;/a-entity&gt;
+        &lt;a-entity charts="type: totem;  entity_id_list: barId;
+        dataPoints_list: ../data/dataPositive.json,../data/data.json,../data/dataSmall.json" position="1 15 10"&gt;&lt;/a-entity&gt;
 
 
-      &lt;a-entity movement-controls="fly: true" position="0 30 30" rotation="-24 15 0"&gt; &lt;!-- Camera fly movement. --&gt;
-        &lt;a-camera position="4.2 -1 1.5" rotation="0 -1 0"&gt;
-        &lt;/a-camera&gt;
-        &lt;a-entity laser-controls="hand: right"&gt;&lt;/a-entity&gt; &lt;!-- Control for Oculus Rift. --&gt;
-      &lt;/a-entity&gt;
+        &lt;a-entity movement-controls="fly: true" position="0 30 30" rotation="-24 15 0"&gt;
+            &lt;a-camera position="4.2 -1 1.5" rotation="0 -1 0"&gt;
+            &lt;/a-camera&gt;;
+        &lt;/a-entity&gt;
     &lt;/a-scene&gt;
 &lt;/body&gt;</code></pre>
 
-        <a class="link" href="../../examples/museum/">Check the visual example</a>
+        <p>-entity_id_list: Comma separated list of a-entity ID. Only used in totem chart type</p>
+
+        <p>-dataPoints_list: Comma separated list of different URL dataPoint. Only used in totem chart type</p>
+
+        <a class="link" href="../../examples/totem/">Check the visual example</a>
 
         <a class="link" href="../../examples/api/">See our API for Totem options and more</a>
 
