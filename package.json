@@ -79,6 +79,7 @@
     ]
   },
   "dependencies": {
+    "clean-css": "^4.2.1",
     "lodash": "^4.17.11",
     "ws": "^7.0.1"
   }
