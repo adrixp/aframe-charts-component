@@ -30,7 +30,9 @@
 
             <a-entity id="barId"            charts="type: bar;      dataPoints: #data" position="-20 22 14" rotation="0 30 -10"></a-entity>
 
-            <a-light type="point" intensity="0.7" position="1 30 30"></a-light>
+            <a-entity charts='type: totem;  entity_id_list: barId; dataPoints_list: {"data1": "../data/data.json", "data2": [{"x": 1, "y": 8, "z": 0, "size": 1, "color": "#ff0000"}]}' position="4 15 10" rotation="0 -4 0"></a-entity>
+
+            <a-light type="point" intensity="0.7" position="2 35 30"></a-light>
 
             <a-entity id="currentChart"  position="1 15 10"></a-entity>
 
@@ -53,8 +55,8 @@
 
         <script  type="text/javascript">
             let myChart = document.getElementById("currentChart");
-            var newPoints1 = [{"x": 1, "y": 8, "z": 0, "size": 1, "color": "#ff0000"}];
-            var newPoints2 = "#dataSmall";
+            var newPoints1 = [{"x": 1, "y": 8, "z": 0, "size": 1, "color": "#ff0000"},{"x": 5, "y": 8, "z": 0, "size": 1, "color": "#ff00ff"}];
+            var newPoints2 = "../data/data.json";
             var newPoints3 = "../data/dataSmall.json";
 
             myChart.setAttribute('charts', {type: "totem",  entity_id_list: "barId", dataPoints_list: {newPoints1: newPoints1, newPoints2: newPoints2, newPoints3: newPoints3}});

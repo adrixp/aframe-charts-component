@@ -33,8 +33,8 @@ Make 3D Charts with this component based on [A-Frame](https://aframe.io).
 | show_legend_position         | Set the legend position. Only works if show legend info property is true           |  {x:0, y:0, z:0}            |
 | show_legend_rotation         | Set the legend rotation. Only works if show legend info property is true           |  {x:0, y:0, z:0}            |
 | show_legend_title         | Title appearing in legend           |  Legend            |
-| entity_id_list          | Comma separated list of a-entity ID. Only used in totem chart type           |  'barId,pieId'           |
-| dataPoints_list         | JSON with name and data points. Only used in totem chart type           |  '{data1: ../data/data.json, data2: #asset1, data3: [{"x": 1, "y": 8, "z": 0, "size": 1, "color": "#ff0000"}]}'            |
+| entity_id_list          | Comma separated list of a-entity ID. Only used in totem chart type           |  barId,pieId           |
+| dataPoints_list         | JSON with name and data points. Only used in totem chart type           |  {"data1": "../data/data.json", "data2": [{"x": 1, "y": 8, "z": 0, "size": 1, "color": "#ff0000"}]}            |
 
 ### JSON File
 File which contains the points in order to generate the chart. The path of this file must be included in dataPoint property.
