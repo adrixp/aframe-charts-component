@@ -2,8 +2,8 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>A-Frame A-Charts Component - Totem</title>
-        <meta name="description" content="Totem example for A-Charts component."/>
+        <title>A-Frame A-Charts Component - Bar</title>
+        <meta name="description" content="Bar example for A-Charts component."/>
         <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
         <script src="../../dist/aframe-charts-component.min.js"></script>
         <style>
@@ -23,10 +23,16 @@
         <a-scene background="color: grey" cursor="rayOrigin:mouse"> <!-- Cursor mouse clickable. -->
             <a-light type="point" intensity="1" position="-2 10 10"></a-light>
 
-            <a-entity id="barId"            charts="type: bar;      dataPoints: ../data/dataPositive.json" position="-20 22 14" rotation="0 30 -10"></a-entity>
+            <a-asset>
+                <a-asset-item id="data" src='../data/dataPositive.json'></a-asset-item>
+                <a-asset-item id="dataSmall" src='../data/dataSmall.json'></a-asset-item>
+            </a-asset>
+
+            <a-entity id="barId"            charts="type: bar;      dataPoints: #data" position="-20 22 14" rotation="0 30 -10"></a-entity>
 
             <a-light type="point" intensity="0.7" position="1 30 30"></a-light>
-            <a-entity charts='type: totem;  entity_id_list: barId; dataPoints_list: {"dataPositive.json": "../data/dataPositive.json", "data.json": "../data/data.json", "dataSmall.json": "../data/dataSmall.json"}' position="1 15 10"></a-entity>
+
+            <a-entity id="currentChart"  position="1 15 10"></a-entity>
 
 
             <a-entity movement-controls="fly: true" position="0 30 30" rotation="-24 15 0">
@@ -44,5 +50,15 @@
 
         <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
         <!-- End GitHub Corner. -->
+
+        <script  type="text/javascript">
+            let myChart = document.getElementById("currentChart");
+            var newPoints1 = [{"x": 1, "y": 8, "z": 0, "size": 1, "color": "#ff0000"}];
+            var newPoints2 = "#dataSmall";
+            var newPoints3 = "../data/dataSmall.json";
+
+            myChart.setAttribute('charts', {type: "totem",  entity_id_list: "barId", dataPoints_list: {newPoints1: newPoints1, newPoints2: newPoints2, newPoints3: newPoints3}});
+
+        </script>
     </body>
 </html>

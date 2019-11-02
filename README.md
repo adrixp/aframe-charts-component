@@ -12,7 +12,7 @@ Make 3D Charts with this component based on [A-Frame](https://aframe.io).
 | Property | Description | Default Value |
 | -------- | ----------- | ------------- |
 | type         | Chart type. Currently we have bubble, pie, doughnut, bar, totem and cylinder charts. <br /><br />*Totem: is used to change dynamically data charts           |  bubble             |
-| dataPoints | Path to JSON input data |  ../data/data.json  |          |
+| dataPoints | Path to JSON input file, asset or array of JSON data |  ../data/data.json  |          |
 | axis_position         | Set the axis position            |  {x:0, y:0, z:0}           |
 | axis_visible         | If false, axis will be hidden            |  true             |
 | axis_color         | Set the axis color            |  red             |
@@ -33,11 +33,11 @@ Make 3D Charts with this component based on [A-Frame](https://aframe.io).
 | show_legend_position         | Set the legend position. Only works if show legend info property is true           |  {x:0, y:0, z:0}            |
 | show_legend_rotation         | Set the legend rotation. Only works if show legend info property is true           |  {x:0, y:0, z:0}            |
 | show_legend_title         | Title appearing in legend           |  Legend            |
-| entity_id_list          | Comma separated list of a-entity ID. Only used in totem chart type           |  ''           |
-| dataPoints_list         | Comma separated list of different URL dataPoint. Only used in totem chart type           |  ''            |
+| entity_id_list          | Comma separated list of a-entity ID. Only used in totem chart type           |  'barId,pieId'           |
+| dataPoints_list         | JSON with name and data points. Only used in totem chart type           |  '{data1: ../data/data.json, data2: #asset1, data3: [{"x": 1, "y": 8, "z": 0, "size": 1, "color": "#ff0000"}]}'            |
 
 ### JSON File
-We need this file which contains the points in order to generate the chart. The path of this file must be included in dataPoint property.
+File which contains the points in order to generate the chart. The path of this file must be included in dataPoint property.
 
 Example JSON file:
 
@@ -85,4 +85,52 @@ Then require and use.
 ```js
 require('aframe');
 require('aframe-charts-component');
+```
+
+### Extra Inputs
+
+-Ajax:
+```html
+<head>
+    <title>My A-Frame Scene</title>
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-charts-component/dist/aframe-charts-component.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+
+<body>
+    <a-scene>
+        <a-entity id="myChart"></a-entity>
+    </a-scene>
+</body>
+```
+
+```JavaScript
+ $.get("/examples/data/data.json", function( data ) {
+     let myChart = document.getElementById("myChart");
+     myChart.setAttribute('charts', {type: "bar",  dataPoints: data});
+ }); 
+```
+
+-Asset:
+```html
+<head>
+    <title>My A-Frame Scene</title>
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-charts-component/dist/aframe-charts-component.min.js"></script>
+</head>
+
+<body>
+    <a-scene>
+        <a-asset>
+            <a-asset-item id="data" src='[{"x": 1, "y": 8, "z": 0, "size": 1, "color": "#ff0000"},
+                {"x": -2, "y": 3, "z": 1, "size": 1.5, "color": "#00ff00"},
+                {"x": -1, "y": 3, "z": 2, "size": 1, "color": "#0000ff"},
+                {"x": 2, "y": 7, "z": 7, "size": 1.5, "color": "#0000ff"},
+                {"x": 1, "y": 6, "z": 3, "size": 1, "color": "#4CC3D9"}]'>
+            </a-asset-item>
+        </a-asset>
+        <a-entity charts="type: bar; dataPoints: #data; axis_length: 12"></a-entity>
+    </a-scene>
+</body>
 ```

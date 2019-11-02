@@ -119,8 +119,8 @@
                 <h3>Totem</h3>
                 <p>This is the totem example.</p>
                 <p>We can use it in order to change data dynamically</p>
-                <pre><code class="html">&lt;a-entity  position="1 15 10" charts="type: totem;  entity_id_list: barId;
-    dataPoints_list: ../data/dataPositive.json,../data/data.json,../data/dataSmall.json"&gt;
+                <pre><code class="html">&lt;a-entity  position="1 15 10" charts='type: totem;  entity_id_list: barId;
+    dataPoints_list: {"dataPositive.json": "../data/dataPositive.json", "data.json": "../data/data.json", "dataSmall.json": "../data/dataSmall.json"}'&gt;
 &lt;/a-entity&gt;</code></pre>
                 <a class="link" href="examples/totem/code.html">Full detailed Code</a>
             </li>

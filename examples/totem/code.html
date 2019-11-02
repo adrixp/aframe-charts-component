@@ -54,8 +54,9 @@
 
         &lt;a-light type="point" intensity="0.7" position="1 30 30"&gt;&lt;/a-light&gt;
 
-        &lt;a-entity charts="type: totem;  entity_id_list: barId;
-        dataPoints_list: ../data/dataPositive.json,../data/data.json,../data/dataSmall.json" position="1 15 10"&gt;&lt;/a-entity&gt;
+        &lt;a-entity charts='type: totem;  entity_id_list: barId;
+            dataPoints_list: {"dataPositive.json": "../data/dataPositive.json", "data.json": "../data/data.json", "dataSmall.json": "../data/dataSmall.json"}'
+            position="1 15 10"&gt;&lt;/a-entity&gt;
 
 
         &lt;a-entity movement-controls="fly: true" position="0 30 30" rotation="-24 15 0"&gt;

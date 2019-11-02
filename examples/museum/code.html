@@ -50,16 +50,17 @@
     &lt;a-scene background="color: grey" cursor="rayOrigin:mouse"&gt; &lt;!-- Cursor mouse clickable. --&gt;
       &lt;a-light type="point" intensity="1" position="-2 10 10"&gt;&lt;/a-light&gt;
 
-      &lt;a-entity id="barId"            charts="type: bar;      dataPoints: ../data/dataPositive.json" position="-50 0 10" rotation="0 30 -10"&gt;&lt;/a-entity&gt;
-      &lt;a-entity id="bubbleId"         charts="type: bubble;   dataPoints: ../data/dataPositive.json" position="-25 15 0" rotation="0 20 -10"&gt;&lt;/a-entity&gt;
-      &lt;a-entity id="pieId"            charts="type: pie;      dataPoints: ../data/dataPositive.json; pie_radius: 5" position="-5 0 -20"&gt;&lt;/a-entity&gt;
-      &lt;a-entity id="cylinderId"       charts="type: cylinder; dataPoints: ../data/dataPositive.json" position="12 17 -5" rotation="0 -20 10"&gt;&lt;/a-entity&gt;
-      &lt;a-entity id="pieDoughnutId"    charts="type: pie;      dataPoints: ../data/dataPositive.json; pie_radius: 5; pie_doughnut: true" position="35 0 -10"&gt;&lt;/a-entity&gt;
+      &lt;a-entity id="barId"           charts="type: bar;      dataPoints: ../data/dataPositive.json" position="-50 0 10" rotation="0 30 -10"&gt;&lt;/a-entity&gt;
+      &lt;a-entity id="bubbleId"        charts="type: bubble;   dataPoints: ../data/dataPositive.json" position="-25 15 0" rotation="0 20 -10"&gt;&lt;/a-entity&gt;
+      &lt;a-entity id="pieId"           charts="type: pie;      dataPoints: ../data/dataPositive.json; pie_radius: 5" position="-5 0 -20"&gt;&lt;/a-entity&gt;
+      &lt;a-entity id="cylinderId"      charts="type: cylinder; dataPoints: ../data/dataPositive.json" position="12 17 -5" rotation="0 -20 10"&gt;&lt;/a-entity&gt;
+      &lt;a-entity id="pieDoughnutId"   charts="type: pie;      dataPoints: ../data/dataPositive.json; pie_radius: 5; pie_doughnut: true" position="35 0 -10"&gt;&lt;/a-entity&gt;
 
       &lt;a-light type="point" intensity="0.7" position="1 30 30"&gt;&lt;/a-light&gt;
 
-      &lt;a-entity charts="type: totem;  entity_id_list: barId,bubbleId,pieId,cylinderId,pieDoughnutId;
-      dataPoints_list: ../data/dataPositive.json,../data/data.json,../data/dataSmall.json" position="1 15 10"&gt;&lt;/a-entity&gt;
+      &lt;a-entity position="1 15 10" charts='type: totem;  entity_id_list: barId,bubbleId,pieId,cylinderId,pieDoughnutId;
+        dataPoints_list: {"dataPositive.json": "../data/dataPositive.json", "data.json": "../data/data.json","dataSmall.json": "../data/dataSmall.json"}'&gt;
+      &lt;/a-entity&gt;
 
 
       &lt;a-entity movement-controls="fly: true" position="0 30 30" rotation="-24 15 0"&gt; &lt;!-- Camera fly movement. --&gt;

@@ -51,12 +51,22 @@ AFRAME.registerComponent('charts', {
     * Generally modifies the entity based on the data.
     */
 
-    update: function (newData) {
+    update: function (oldData) {
         const data = this.data;
-        if (newData!= null && newData.dataPoints){
-            this.loader.load(newData.dataPoints, this.onDataLoaded.bind(this));
-        }else if(data.dataPoints){
-            this.loader.load(data.dataPoints, this.onDataLoaded.bind(this));
+        if (data.dataPoints && data.dataPoints !== oldData.dataPoints) {
+            while (this.el.firstChild)
+                this.el.firstChild.remove();
+        }
+        if(data.dataPoints) {
+            if (data.dataPoints.constructor === ([{}]).constructor) {
+                this.onDataLoaded(this, data.dataPoints, true);
+            }else if(data.dataPoints.constructor === "".constructor){
+                try{
+                    this.onDataLoaded(this, JSON.parse(data.dataPoints), true);
+                }catch(e) {
+                    this.loader.load(data.dataPoints, this.onDataLoaded.bind(this, false));
+                }
+            }
         }else if(data.type === "totem"){
             generateTotem(data, this.el);
         }
@@ -84,10 +94,11 @@ AFRAME.registerComponent('charts', {
     */
     play: function () { },
 
-    onDataLoaded: function (file) {
-        let dataPoints;
+    onDataLoaded: function (isJson, file) {
+        let dataPoints = file;
         try{
-            dataPoints = JSON.parse(file);
+            if(!isJson)
+                dataPoints = JSON.parse(file);
         }catch(e) {
             throw new Error('Can\'t parse JSON file. Maybe is not a valid JSON file');
         }
@@ -392,12 +403,6 @@ function generateCylinder(point) {
     return entity;
 }
 
-let removeAllChildren = function(element, children){
-    children.forEach(function(child) {
-        element.el.removeChild(child);
-    });
-};
-
 function generateTotemTitle(width, position) {
     let entity = document.createElement('a-plane');
     entity.setAttribute('position', position);
@@ -428,21 +433,20 @@ function generateTotemSlice(properties, entity_id_list, dataPoints_path) {
     });
 
     entity.addEventListener('click', function () {
-        console.log(dataPoints_path);
         let entity_list = entity_id_list.split(',');
         for(let id of entity_list){
             let el = document.querySelector('#' + id).components.charts;
-            removeAllChildren(el, el.el.getChildEntities());
-            el.update({dataPoints: dataPoints_path});
+            let oldDataPoints = el.data.dataPoints;
+            el.data.dataPoints = dataPoints_path;
+            el.update({dataPoints: oldDataPoints});
         }
     });
     return entity;
 }
 
 function getTotemWidth(dataPoints_list) {
-    let max_width = 0;
-    for(let dataPoints of dataPoints_list){
-        let name = dataPoints.split('/')[dataPoints.split('/').length - 1];
+    let max_width = "Select dataSource:".length;
+    for(let name in dataPoints_list){
         if(name.length > max_width)
             max_width = name.length;
     }
@@ -457,17 +461,17 @@ function generateTotem(properties, element) {
     if(properties.dataPoints_list === '')
         return;
 
-    let dataPoints_list = properties.dataPoints_list.split(',');
+    let dataPoints_list = properties.dataPoints_list.constructor === ({}).constructor ? properties.dataPoints_list : JSON.parse(properties.dataPoints_list);
     let position = getPosition(element);
     let width = getTotemWidth(dataPoints_list);
     element.appendChild(generateTotemTitle(width, position));
     let offset = 0.75;
-    for(let dataPoints of dataPoints_list){
+    for(let myDataPoints in dataPoints_list){
         let dataProperties = {};
         dataProperties['position'] = {x: position.x, y: parseInt(position.y) - offset, z: position.z};
-        dataProperties['name'] = dataPoints.split('/')[dataPoints.split('/').length - 1];
+        dataProperties['name'] = myDataPoints;
         dataProperties['width'] = width;
-        element.appendChild(generateTotemSlice(dataProperties, properties.entity_id_list, dataPoints));
+        element.appendChild(generateTotemSlice(dataProperties, properties.entity_id_list, dataPoints_list[myDataPoints]));
         offset += 0.65;
     }
 
@@ -542,7 +546,7 @@ function generateAxis(element, properties) {
                 tick_end   = {x: axis_position.x + tick_length,  y: axis_position.y,                z: axis_position.z + tick};
             }
 
-            axis_line.setAttribute('line__' + tick, {
+            axis_line.setAttribute('line__' + axis + tick, {
                 'start': tick_start,
                 'end':   tick_end,
                 'color': tick_color
@@ -554,21 +558,21 @@ function generateAxis(element, properties) {
                 axis_text.setAttribute('position', tick_start);
 
                 if (axis === 'x') {
-                    axis_text.setAttribute('text__' + tick, {
+                    axis_text.setAttribute('text__' + axis + tick, {
                         'value': Math.round(tick * 100) / 100,
                         'width': axis_text_size,
                         'color': axis_text_color,
                         'xOffset': 5
                     });
                 }else if (axis === 'y') {
-                    axis_text.setAttribute('text__' + tick, {
+                    axis_text.setAttribute('text__' + axis + tick, {
                         'value': Math.round(tick * 100) / 100,
                         'width': axis_text_size,
                         'color': axis_text_color,
                         'xOffset': 4
                     });
                 }else{
-                    axis_text.setAttribute('text__' + tick, {
+                    axis_text.setAttribute('text__' + axis + tick, {
                         'value': Math.round(tick * 100) / 100,
                         'width': axis_text_size,
                         'color': axis_text_color,
@@ -646,21 +650,21 @@ function generateGridAxis(element, properties) {
                 axis_text.setAttribute('position', tick_end);
 
                 if (axis === 'x') {
-                    axis_text.setAttribute('text__' + tick, {
+                    axis_text.setAttribute('text__' + axis + tick, {
                         'value': Math.round(tick * 100) / 100,
                         'width': axis_text_size,
                         'color': axis_text_color,
                         'xOffset': 5
                     });
                 }else if (axis === 'y') {
-                    axis_text.setAttribute('text__' + tick, {
+                    axis_text.setAttribute('text__' + axis + tick, {
                         'value': Math.round(tick * 100) / 100,
                         'width': axis_text_size,
                         'color': axis_text_color,
                         'xOffset': 4
                     });
                 }else{
-                    axis_text.setAttribute('text__' + tick, {
+                    axis_text.setAttribute('text__' + axis + tick, {
                         'value': Math.round(tick * 100) / 100,
                         'width': axis_text_size,
                         'color': axis_text_color,
@@ -671,13 +675,13 @@ function generateGridAxis(element, properties) {
                 element.appendChild(axis_text);
             }
 
-            axis_line.setAttribute('line__' + tick, {
+            axis_line.setAttribute('line__' + axis + tick, {
                 'start': tick_start,
                 'end':   tick_end,
                 'color': axis_color
             });
 
-            axis_line.setAttribute('line__' + tick + axis_length, {
+            axis_line.setAttribute('line__' + axis + tick + axis_length, {
                 'start': grid_start,
                 'end':   grid_end,
                 'color': axis_color
@@ -700,7 +704,7 @@ function generateGridAxis(element, properties) {
                     sub_grid_end   = {x: axis_position.x + axis_length,           y: axis_position.y + grid,                  z: axis_position.z + tick};
                 }
 
-                axis_line.setAttribute('line__' + tick + grid + axis_length, {
+                axis_line.setAttribute('line__' + axis + tick + grid + axis_length, {
                     'start': sub_grid_start,
                     'end':   sub_grid_end,
                     'color': axis_color
