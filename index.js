@@ -435,10 +435,10 @@ function generateTotemSlice(properties, entity_id_list, dataPoints_path) {
     entity.addEventListener('click', function () {
         let entity_list = entity_id_list.split(',');
         for(let id of entity_list){
-            let el = document.querySelector('#' + id).components.charts;
-            let oldDataPoints = el.data.dataPoints;
-            el.data.dataPoints = dataPoints_path;
-            el.update({dataPoints: oldDataPoints});
+            let myChart = document.getElementById(id);
+            let data = myChart.getAttribute("charts");
+            data.dataPoints = dataPoints_path;
+            myChart.setAttribute('charts', data);
         }
     });
     return entity;
