@@ -54,9 +54,9 @@
         <!-- End GitHub Corner. -->
         <script  type="text/javascript">
             let myChart = document.getElementById("totem");
-            var newPoints1 = [{"x": 1, "y": 8, "z": 0, "size": 1, "color": "#ff0000"},{"x": 5, "y": 8, "z": 0, "size": 1, "color": "#ff00ff"}];
-            var newPoints2 = [{"x": 1, "y": 8, "z": 0, "size": 1, "color": "#ff0000"},{"x": 5, "y": 8, "z": 0, "size": 1, "color": "#ff00ff"}];
-            var newPoints3 = [{"x": 1, "y": 8, "z": 0, "size": 1, "color": "#ff0000"},{"x": 5, "y": 8, "z": 0, "size": 1, "color": "#ff00ff"}];
+            var newPoints1 = "../data/dataPositive.json";
+            var newPoints2 = "../data/data.json";
+            var newPoints3 = "../data/dataSmall.json";
 
             myChart.setAttribute('charts', {type: "totem",  entity_id_list: "barId,bubbleId,pieId,cylinderId,pieDoughnutId", dataPoints_list: {newPoints1: newPoints1, newPoints2: newPoints2, newPoints3: newPoints3}});
 
