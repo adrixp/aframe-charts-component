@@ -1,12 +1,12 @@
 {
   "name": "aframe-charts-component",
-  "version": "2.1.10",
+  "version": "2.1.11",
   "description": "Make 3D Charts with this component based on A-Frame.",
-  "main": "index.js",
+  "main": "dist/aframe-charts-component.min.js",
   "unpkg": "dist/aframe-charts-component.min.js",
   "scripts": {
-    "build": "webpack --mode production index.js dist/aframe-charts-component.js",
-    "dev": "budo index.js:dist/aframe-charts-component.min.js --port 7000 --live --open",
+    "build": "webpack --mode production --config webpack.config.js",
+    "dev": "budo src/index.js:dist/aframe-charts-component.min.js --port 7000 --live --open",
     "dist": "npm run build && uglifyjs dist/aframe-charts-component.js > dist/aframe-charts-component.min.js",
     "lint": "semistandard -v | snazzy",
     "prepublish": "npm run dist",

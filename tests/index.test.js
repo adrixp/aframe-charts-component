@@ -1,6 +1,6 @@
 /* global assert, setup, suite, test */
 require('aframe');
-require('../index.js');
+require('../src');
 var entityFactory = require('./helpers').entityFactory;
 
 suite('charts component', function () {

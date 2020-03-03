@@ -30,17 +30,15 @@
             <a-entity id="pieDoughnutId"    charts="type: pie;      dataPoints: ../data/dataPositive.json; pie_radius: 5; pie_doughnut: true" position="35 0 -10"></a-entity>
 
             <a-light type="point" intensity="0.7" position="1 30 30"></a-light>
-            <a-entity id="totem" position="1 15 10"></a-entity>
+            <a-entity charts="type: totem;  entity_id_list: barId,bubbleId,pieId,cylinderId,pieDoughnutId; dataPoints_list: {'data.json': '../data/dataPositive.json', 'dataMedium.json': '../data/dataMedium.json','dataSmall.json': '../data/dataSmall.json'}" position="1 15 10"></a-entity>
 
             <a-entity movement-controls="fly: true" position="0 30 30" rotation="-24 15 0">
                 <a-camera position="4.2 -1 1.5" rotation="0 -1 0">
                 </a-camera>
+                <!-- Control for Oculus Rift. -->
+                <a-entity oculus-go-controls="" x-button-listener=""></a-entity>
+                <a-entity laser-controls="hand: right"></a-entity>
             </a-entity>
-            <!-- Control for Oculus Rift and VR Devices. -->
-            <a-entity laser-controls="hand: right" daydream-controls="" gearvr-controls="" magicleap-controls="" oculus-go-controls="" oculus-touch-controls="" vive-controls="" vive-focus-controls="" windows-motion-controls="" generic-tracked-controller-controls=""></a-entity>
-            <a-entity oculus-go-controls="" x-button-listener=""></a-entity>
-            <a-entity laser-controls="hand: left" daydream-controls="" gearvr-controls="" magicleap-controls="" oculus-go-controls="" oculus-touch-controls="" vive-controls="" vive-focus-controls="" windows-motion-controls="" generic-tracked-controller-controls=""></a-entity>
-
         </a-scene>
 
         <!-- GitHub Corner. -->
@@ -52,14 +50,5 @@
 
         <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
         <!-- End GitHub Corner. -->
-        <script  type="text/javascript">
-            let myChart = document.getElementById("totem");
-            var newPoints1 = "../data/dataPositive.json";
-            var newPoints2 = "../data/data.json";
-            var newPoints3 = "../data/dataSmall.json";
-
-            myChart.setAttribute('charts', {type: "totem",  entity_id_list: "barId,bubbleId,pieId,cylinderId,pieDoughnutId", dataPoints_list: {newPoints1: newPoints1, newPoints2: newPoints2, newPoints3: newPoints3}});
-
-        </script>
     </body>
 </html>
