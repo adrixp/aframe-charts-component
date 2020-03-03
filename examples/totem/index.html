@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>A-Frame A-Charts Component - Totem</title>
         <meta name="description" content="Totem example for A-Charts component."/>
-        <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+        <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
         <script src="../../dist/aframe-charts-component.min.js"></script>
         <style>
             .home{
@@ -33,6 +33,10 @@
                 <a-camera position="4.2 -1 1.5" rotation="0 -1 0">
                 </a-camera>
             </a-entity>
+            <!-- Control for Oculus Rift and VR Devices. -->
+            <a-entity id="leftHand" hand-controls="hand: left; handModelStyle: lowPoly; color: #ffcccc"></a-entity>
+            <a-entity id="rightHand" hand-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc"></a-entity>
+
         </a-scene>
 
         <!-- GitHub Corner. -->
