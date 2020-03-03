@@ -1,6 +1,6 @@
 {
   "name": "aframe-charts-component",
-  "version": "2.1.8",
+  "version": "2.1.10",
   "description": "Make 3D Charts with this component based on A-Frame.",
   "main": "index.js",
   "unpkg": "dist/aframe-charts-component.min.js",
@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/adrixp/aframe-charts-component#readme",
   "devDependencies": {
-    "aframe": "^1.0.3",
+    "aframe": "^1.0.4",
     "browserify": "^16.2.3",
     "budo": "^11.6.2",
     "chai": "^3.4.1",

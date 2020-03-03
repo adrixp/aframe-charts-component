@@ -461,7 +461,7 @@ function generateTotem(properties, element) {
     if(properties.dataPoints_list === '')
         return;
 
-    let dataPoints_list = properties.dataPoints_list.constructor === ({}).constructor ? properties.dataPoints_list : JSON.parse(properties.dataPoints_list);
+    let dataPoints_list = properties.dataPoints_list.constructor === ({}).constructor ? properties.dataPoints_list : JSON.parse(properties.dataPoints_list.replace(/'/g, '"'));
     let position = getPosition(element);
     let width = getTotemWidth(dataPoints_list);
     element.appendChild(generateTotemTitle(width, position));

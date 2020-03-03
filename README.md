@@ -61,7 +61,7 @@ Install and use by directly including the [browser files](dist):
 ```html
 <head>
   <title>My A-Frame Scene</title>
-  <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
   <script src="https://unpkg.com/aframe-charts-component/dist/aframe-charts-component.min.js"></script>
 </head>
 
@@ -93,7 +93,7 @@ require('aframe-charts-component');
 ```html
 <head>
     <title>My A-Frame Scene</title>
-    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-charts-component/dist/aframe-charts-component.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
@@ -116,7 +116,7 @@ require('aframe-charts-component');
 ```html
 <head>
     <title>My A-Frame Scene</title>
-    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-charts-component/dist/aframe-charts-component.min.js"></script>
 </head>
 
