@@ -59,7 +59,7 @@
     "mocha": "^6.1.4",
     "randomcolor": "^0.4.4",
     "semistandard": "^13.0.1",
-    "shelljs": "^0.7.0",
+    "shelljs": "^0.8.5",
     "shx": "^0.1.1",
     "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0",
